@@ -15,7 +15,7 @@ MonoBehaviour:
   SpaceshipPref: {fileID: 5551175190355302685, guid: de54998bea7dc0643beff362425226ff,
     type: 3}
   GunData: {fileID: 11400000, guid: c36fae8abc398ad41a4d31fcb87095ca, type: 2}
-  Speed: 15
-  MaxVelocity: 8
-  RotationSpeed: 2
+  Speed: 25
+  MaxVelocity: 13
+  RotationSpeed: 6
   EngineSound: {fileID: 8300000, guid: aac5167bb363326419e5ecafe02e063f, type: 3}

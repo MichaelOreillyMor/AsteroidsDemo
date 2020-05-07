@@ -89,15 +89,11 @@ namespace Asteroids.Entities
         #endregion
 
         #region Actions
-
-        private void Update()
+        protected override void FixedUpdate()
         {
             if (isAlive)
             {
-                if (isShoting)
-                {
-                    Shot();
-                }
+                base.FixedUpdate();
 
                 if (isMovingForward)
                 {
@@ -107,6 +103,17 @@ namespace Asteroids.Entities
                 if (rotationDir != 0f)
                 {
                     Rotate();
+                }
+            }
+        }
+
+        private void Update()
+        {
+            if (isAlive)
+            {
+                if (isShoting)
+                {
+                    Shot();
                 }
 
                 if(wasMovingForwardLastFrame != isMovingForward)
