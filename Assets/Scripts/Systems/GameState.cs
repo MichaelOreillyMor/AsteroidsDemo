@@ -37,6 +37,9 @@ namespace Asteroids.Systems
         [SerializeField]
         private CameraShake cameraShake;
 
+        [SerializeField]
+        private BackgroundController backgroundController;
+
         private InputHandler inputHandler;
 
         private int score;
@@ -60,6 +63,7 @@ namespace Asteroids.Systems
             asteroidsLevelsController.Setup(AsteroidsLevelsData);
             spaceshipState.Setup(spaceshipData);
             cameraShake.Setup();
+            backgroundController.Setup();
 
             score = 0;
 
@@ -78,7 +82,6 @@ namespace Asteroids.Systems
             canvasManager.Unsetup();
             asteroidsLevelsController.Unsetup();
             spaceshipState.Unsetup();
-            inputHandler = null;
 
             Messenger<AsteroidDestroyedMessage>.RemoveListener("OnAsteroidDestroyed", OnAsteroidDestroyed);
             Messenger<bool>.RemoveListener("OnEndGame", OnGameEnded);

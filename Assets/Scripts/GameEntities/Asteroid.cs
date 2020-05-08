@@ -11,7 +11,7 @@ namespace Asteroids.Entities
      /// </summary>
     public class Asteroid : BaseGameEntity
     {
-        private static float INIT_ROT_MULT = 0.005f;
+        private static float INIT_ROT_MULT = 0.0035f;
         private AsteroidStageData asteroidStageData;
 
         public void Setup(AsteroidStageData asteroidStageData, Vector3 direction)
@@ -22,6 +22,8 @@ namespace Asteroids.Entities
             SetRandInitForces();
 
             transform.localScale = Vector3.one * asteroidStageData.Scale;
+
+            rigidbody.mass = asteroidStageData.mass;
             rigidbody.AddForce(direction * asteroidStageData.Speed);
         }
 

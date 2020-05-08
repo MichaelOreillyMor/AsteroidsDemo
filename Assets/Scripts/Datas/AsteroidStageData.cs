@@ -10,5 +10,6 @@ namespace Asteroids.Datas
     {
         public float Speed;
         public float Scale;
+        public float mass;
     }
 }
