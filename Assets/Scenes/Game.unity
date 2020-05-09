@@ -3660,7 +3660,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4000013213224824, guid: a649302f8407dd9469e2c5b67b4a0674, type: 3}
       propertyPath: m_LocalScale.y
-      value: 1.5
+      value: 1.32
       objectReference: {fileID: 0}
     - target: {fileID: 4000013213224824, guid: a649302f8407dd9469e2c5b67b4a0674, type: 3}
       propertyPath: m_LocalScale.z
@@ -4567,7 +4567,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2087597796}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Asteroids
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9470,7 +9470,7 @@ GameObject:
   - component: {fileID: 1985187516647616961}
   - component: {fileID: 1818776454036114661}
   - component: {fileID: 1819459810503681397}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: SmokeEffect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9517,7 +9517,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6921373818797202333}
   - component: {fileID: 6921373818797623230}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
