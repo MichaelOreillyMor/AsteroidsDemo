@@ -2,7 +2,7 @@
 
 using System.Collections;
 using UnityEngine;
-using UnityEngine.Rendering.PostProcessing;
+//using UnityEngine.Rendering.PostProcessing;
 
 namespace Asteroids.Effects
 {
@@ -17,8 +17,8 @@ namespace Asteroids.Effects
         [SerializeField]
         private AnimationCurve lightIntesity;
 
-        [SerializeField]
-        private PostProcessVolume postProcessVolume;
+        //[SerializeField]
+        //private PostProcessVolume postProcessVolume;
 
         [SerializeField]
         private AnimationCurve chromaticAbIntesity;
@@ -29,15 +29,15 @@ namespace Asteroids.Effects
         [SerializeField]
         private AnimationCurve bloomIntesity;
 
-        private ChromaticAberration chromaticAberration;
-        private LensDistortion lensDistortion;
-        private Bloom bloom;
+        //private ChromaticAberration chromaticAberration;
+        //private LensDistortion lensDistortion;
+        //private Bloom bloom;
 
         private void Awake()
         {
-            postProcessVolume.profile.TryGetSettings(out chromaticAberration);
-            postProcessVolume.profile.TryGetSettings(out lensDistortion);
-            postProcessVolume.profile.TryGetSettings(out bloom);
+            //postProcessVolume.profile.TryGetSettings(out chromaticAberration);
+            //postProcessVolume.profile.TryGetSettings(out lensDistortion);
+            //postProcessVolume.profile.TryGetSettings(out bloom);
         }
 
         protected override IEnumerator PlayFXs()
@@ -52,9 +52,9 @@ namespace Asteroids.Effects
             {
                 step = time / duration;
 
-                chromaticAberration.intensity.value = chromaticAbIntesity.Evaluate(step);
-                lensDistortion.intensity.value = lensDistIntesity.Evaluate(step);
-                bloom.intensity.value = bloomIntesity.Evaluate(step);
+                //chromaticAberration.intensity.value = chromaticAbIntesity.Evaluate(step);
+                //lensDistortion.intensity.value = lensDistIntesity.Evaluate(step);
+                //bloom.intensity.value = bloomIntesity.Evaluate(step);
 
                 lightEmission.intensity = lightIntesity.Evaluate(step);
 

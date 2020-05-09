@@ -47,14 +47,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63dcd9f1fae3bc04da9f211e8ccd0ed5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  poolPrefab: {fileID: 3781552892870564977}
   duration: 2
-  audioSource: {fileID: 82433266676123102}
   particleSystems:
   - {fileID: 9177814413519301722}
   - {fileID: 9177814412512381330}
   - {fileID: 9177814419763868128}
   - {fileID: 9177814419389204704}
+  audioSource: {fileID: 82433266676123102}
   lightEmission: {fileID: 6321935346604581676}
   lightIntesity:
     serializedVersion: 2
@@ -107,7 +106,6 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  postProcessVolume: {fileID: 7555854294632336054}
   chromaticAbIntesity:
     serializedVersion: 2
     m_Curve:
@@ -339,7 +337,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1300286848590762432}
-  - component: {fileID: 7555854294632336054}
   m_Layer: 11
   m_Name: Post Porcess Vol
   m_TagString: Untagged
@@ -361,23 +358,6 @@ Transform:
   m_Father: {fileID: 3886008510585480591}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7555854294632336054
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5853472491478743135}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8b9a305e18de0c04dbd257a21cd47087, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sharedProfile: {fileID: 11400000, guid: 743d225596a207d4e8e2d7b2746e1364, type: 2}
-  isGlobal: 1
-  blendDistance: 0
-  weight: 1
-  priority: 1
 --- !u!1 &9197594426719834573
 GameObject:
   m_ObjectHideFlags: 0
