@@ -38,8 +38,9 @@ public class BackgroundController : MonoBehaviour
 
     private void SetCloundsPosition()
     {
+        float posY = cloudsParticlesTr.position.y;
         Vector3 position = Camera.main.ViewportToWorldPoint(new Vector3(0, 0.5f, 0));
-        position.y = 0;
+        position.y = posY;
 
         cloudsParticlesTr.position = position;
     }
