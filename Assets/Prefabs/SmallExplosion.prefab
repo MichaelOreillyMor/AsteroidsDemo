@@ -109,15 +109,15 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 0
       value: 0
-      inSlope: 10.108753
-      outSlope: 10.108753
+      inSlope: 5054.3765
+      outSlope: 5054.3765
       tangentMode: 34
       weightedMode: 0
       inWeight: 0
       outWeight: 0.33333334
     - serializedVersion: 3
       time: 0.09892417
-      value: 1
+      value: 500
       inSlope: 0.13433184
       outSlope: 0.13433184
       tangentMode: 0
@@ -152,15 +152,15 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 0
       value: 0
-      inSlope: 3.2124784
-      outSlope: 3.2124784
+      inSlope: 3.6778095
+      outSlope: 3.6778095
       tangentMode: 34
       weightedMode: 0
       inWeight: 0
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 0.09892417
-      value: 0.31779176
+      time: 0.10104514
+      value: 0.37162477
       inSlope: 0.13433184
       outSlope: 0.13433184
       tangentMode: 0
@@ -168,7 +168,7 @@ MonoBehaviour:
       inWeight: 0.33333334
       outWeight: 0.25721502
     - serializedVersion: 3
-      time: 0.19863157
+      time: 0.13712339
       value: 0.0163972
       inSlope: -0.037575416
       outSlope: -0.037575416
@@ -370,7 +370,7 @@ Light:
   m_Shape: 0
   m_Color: {r: 0.9433962, g: 0.47296736, b: 0.3426486, a: 1}
   m_Intensity: 5
-  m_Range: 20
+  m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 10
@@ -406,9 +406,9 @@ Light:
   m_RenderMode: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 2048
+    m_Bits: 3072
   m_RenderingLayerMask: 1
-  m_Lightmapping: 4
+  m_Lightmapping: 1
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
