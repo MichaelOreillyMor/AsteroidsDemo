@@ -2,7 +2,8 @@
 
 using System.Collections;
 using UnityEngine;
-//using UnityEngine.Rendering.PostProcessing;
+using UnityEngine.Rendering;
+using UnityEngine.Rendering.Universal;
 
 namespace Asteroids.Effects
 {
@@ -17,8 +18,8 @@ namespace Asteroids.Effects
         [SerializeField]
         private AnimationCurve lightIntesity;
 
-        //[SerializeField]
-        //private PostProcessVolume postProcessVolume;
+        [SerializeField]
+        private Volume postProcessVolume;
 
         [SerializeField]
         private AnimationCurve chromaticAbIntesity;
@@ -29,15 +30,23 @@ namespace Asteroids.Effects
         [SerializeField]
         private AnimationCurve bloomIntesity;
 
-        //private ChromaticAberration chromaticAberration;
-        //private LensDistortion lensDistortion;
-        //private Bloom bloom;
+        private ChromaticAberration chromaticAberration;
+        private LensDistortion lensDistortion;
+        private Bloom bloom;
+
+        private float chromaticAberrationValue;
+        private float lensDistortionValue;
+        private float bloomValue;
 
         private void Awake()
         {
-            //postProcessVolume.profile.TryGetSettings(out chromaticAberration);
-            //postProcessVolume.profile.TryGetSettings(out lensDistortion);
-            //postProcessVolume.profile.TryGetSettings(out bloom);
+            postProcessVolume.profile.TryGet(out chromaticAberration);
+            postProcessVolume.profile.TryGet(out lensDistortion);
+            postProcessVolume.profile.TryGet(out bloom);
+
+            chromaticAberrationValue = chromaticAberration.intensity.value;
+            lensDistortionValue = lensDistortion.intensity.value;
+            bloomValue = bloom.intensity.value;
         }
 
         protected override IEnumerator PlayFXs()
@@ -55,10 +64,11 @@ namespace Asteroids.Effects
                 //chromaticAberration.intensity.value = chromaticAbIntesity.Evaluate(step);
                 //lensDistortion.intensity.value = lensDistIntesity.Evaluate(step);
                 //bloom.intensity.value = bloomIntesity.Evaluate(step);
-
+                bloom.intensity.Override(bloomIntesity.Evaluate(step));
                 lightEmission.intensity = lightIntesity.Evaluate(step);
-
+                Debug.Log("step: " + step + " bloom: " + bloomIntesity.Evaluate(step));
                 time += Time.deltaTime;
+ 
                 yield return null;
             }
 

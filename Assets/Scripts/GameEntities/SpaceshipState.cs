@@ -15,7 +15,7 @@ namespace Asteroids.Entities
     /// </summary>
     public class SpaceshipState : BaseGameEntity, GameControls.ISpaceshipActions
     {
-        private const float THRUSTER_VEL_ON_MOVE = 0.7f;
+        private const float THRUSTER_VEL_ON_MOVE = 0.6f;
 
         [SerializeField]
         private GunState gunState;
