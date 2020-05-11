@@ -1,17 +1,19 @@
--Create a shotgun that it´s loaded when you hit an asteroid with a rocket, max 5.
+-----High priority tasks-----
+
+-Create a shotgun that it´s loaded +1 when you hit an asteroid with a rocket, max 5 ammunition.
 
 -The sun will cover all the screen when you die.
 
 -Create an AI that loads asteroids patterns instead of levels, this patterns will have a level of difficulty assigned.
  They will be spawned depending on: 
   .The skills of the player.
-  .If he is still all the time.
+  .If the player is still all the time.
   .How many asteroids are on the screen.
   .The time since the start of the game.
 
 -Balance dificulty.
 
-Low priority:
+-----Low priority tasks-----
 
 -Change UI to TextMesh Pro
 
