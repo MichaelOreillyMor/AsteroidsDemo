@@ -9557,7 +9557,7 @@ MonoBehaviour:
   - {fileID: 134190174}
   - {fileID: 1857336182}
   - {fileID: 683304810}
-  asreoidsMaxSpeed: 8
+  asreoidsMaxSpeed: 12
 --- !u!1001 &7073002784768129088
 PrefabInstance:
   m_ObjectHideFlags: 0
