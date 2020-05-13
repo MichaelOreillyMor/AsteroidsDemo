@@ -97,10 +97,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   duration: 3
   particleSystems:
-  - {fileID: 9177814413519301722}
+  - {fileID: 9177814419389204704}
   - {fileID: 9177814412512381330}
   - {fileID: 9177814419763868128}
-  - {fileID: 9177814419389204704}
   audioSource: {fileID: 82202451459274288}
   lightEmission: {fileID: 6321935346604581676}
   lightIntesity:
@@ -590,12 +589,6 @@ Transform:
 --- !u!198 &9177814419389204704 stripped
 ParticleSystem:
   m_CorrespondingSourceObject: {fileID: 198000012942003240, guid: ecdd96beb7f93494880c052dfccf9dc1,
-    type: 3}
-  m_PrefabInstance: {fileID: 9070612904684324040}
-  m_PrefabAsset: {fileID: 0}
---- !u!198 &9177814413519301722 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 198000010217891986, guid: ecdd96beb7f93494880c052dfccf9dc1,
     type: 3}
   m_PrefabInstance: {fileID: 9070612904684324040}
   m_PrefabAsset: {fileID: 0}
