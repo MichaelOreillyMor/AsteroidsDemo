@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SpaceshipPref: {fileID: 5551175190355302685, guid: de54998bea7dc0643beff362425226ff,
     type: 3}
-  GunData: {fileID: 11400000, guid: c36fae8abc398ad41a4d31fcb87095ca, type: 2}
+  GunData: {fileID: 11400000, guid: d03258c0932743e479e01d27a60bf0e5, type: 2}
   Speed: 25
   MaxVelocity: 13
   RotationSpeed: 6

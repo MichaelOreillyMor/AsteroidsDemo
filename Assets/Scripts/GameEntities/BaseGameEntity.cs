@@ -32,7 +32,7 @@ namespace Asteroids.Entities
 
         public virtual void Setup()
         {
-            ActiveModel(true);
+            ActivateEntity(true);
 
             if(screenLismitsHandler == null)
                 screenLismitsHandler = new ScreenLismitsHandler();
@@ -40,12 +40,14 @@ namespace Asteroids.Entities
 
         public virtual void Unsetup()
         {
-            ActiveModel(false);
+            ActivateEntity(false);
         }
 
-        public virtual void ActiveModel(bool b)
+        public virtual void ActivateEntity(bool b)
         {
-            model3D.SetActive(b);
+            if(model3D)
+                model3D.SetActive(b);
+
             collider.enabled = b;
             rigidbody.isKinematic = !b;
         }

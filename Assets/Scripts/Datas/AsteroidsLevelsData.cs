@@ -6,7 +6,7 @@ namespace Asteroids.Datas
     [CreateAssetMenu(fileName = "New AsteroidsLevelsData", menuName = "Data/AsteroidsLevelsData")]
     public class AsteroidsLevelsData : ScriptableObject
     {
-        public Asteroid AsteroidPref;
+        public AsteroidState AsteroidPref;
         public AsteroidsStagesData AsteroidsStagesData;
 
         public AsteroidsLevelData[] Levels;

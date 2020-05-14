@@ -17,7 +17,7 @@ namespace Asteroids.Systems
         private const int PRELOAD_ASTEROIDS = 10;
         private const int SMALL_ASTEROIDS_PER_BIG = 4;
 
-        private Asteroid asteroidPref;
+        private AsteroidState asteroidPref;
         private AsteroidsStagesData asteroidsStagesData;
 
         private Action asteroidsCleanedCallback;
@@ -27,7 +27,7 @@ namespace Asteroids.Systems
 
         private Camera camera;
 
-        public AsteroidsHandler(Asteroid asteroidPref, AsteroidsStagesData asteroidsStagesData, Action asteroidsCleanedCallback)
+        public AsteroidsHandler(AsteroidState asteroidPref, AsteroidsStagesData asteroidsStagesData, Action asteroidsCleanedCallback)
         {
             this.asteroidPref = asteroidPref;
             this.asteroidsStagesData = asteroidsStagesData;
@@ -67,18 +67,18 @@ namespace Asteroids.Systems
 
         private void SpawnAsteroid(AsteroidStageData stage, Vector3 position, Vector3 dir)
         {
-            Asteroid asteroid = (Asteroid)SimplePool.Spawn(asteroidPref, position, Quaternion.identity);
+            AsteroidState asteroid = (AsteroidState)SimplePool.Spawn(asteroidPref, position, Quaternion.identity);
             asteroid.Setup(stage, dir);
         }
 
         public void ResetAsteroids()
         {
             List<PoolMember> asteroidsActive = SimplePool.GetActiveInstances(asteroidPref);
-            Asteroid asteroid;
+            AsteroidState asteroid;
 
             for (int i = asteroidsActive.Count - 1; i >= 0; i--)
             {
-                asteroid = (Asteroid)asteroidsActive[i];
+                asteroid = (AsteroidState)asteroidsActive[i];
                 asteroid.Unsetup();
             }
         }

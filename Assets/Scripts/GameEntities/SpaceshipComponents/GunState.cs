@@ -36,8 +36,8 @@ namespace Asteroids.Entities
             if (time > nextShotTime)
             {
                 nextShotTime = time + reloadTime;
-                Rocket rocket = (Rocket)SimplePool.Spawn(gunData.BulletPref, transform.position, transform.rotation);
-                rocket.Setup(currentVel, gunData.RocketAcceleration, gunData.RocketMaxSpeed, gunData.RocketLifeTime);
+                RocketState rocket = (RocketState)SimplePool.Spawn(gunData.BulletPref, transform.position, transform.rotation);
+                rocket.Setup(gunData, currentVel);
 
                 Messenger.Broadcast("OnShot");
             }
@@ -46,11 +46,11 @@ namespace Asteroids.Entities
         public void Unsetup()
         {
             List<PoolMember> rocketsActive = SimplePool.GetActiveInstances(gunData.BulletPref);
-            Rocket rocket;
+            RocketState rocket;
 
             for (int i = rocketsActive.Count - 1; i >= 0; i--)
             {
-                rocket = (Rocket)rocketsActive[i];
+                rocket = (RocketState)rocketsActive[i];
                 rocket.Unsetup();
             }
         }

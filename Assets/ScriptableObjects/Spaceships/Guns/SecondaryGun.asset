@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f28ffc8924b3a5448b50a50e519ba0d0, type: 3}
+  m_Name: SecondaryGun
+  m_EditorClassIdentifier: 
+  BulletPref: {fileID: 5517428538837054779, guid: 76f49af0a52109947b5f6879b5700005,
+    type: 3}
+  ReloadTime: 0.5
+  RocketLifeTime: 0.6
+  RocketAcceleration: 50
+  RocketMaxSpeed: 100
+  DelayToFX: 2

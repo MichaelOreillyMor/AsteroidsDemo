@@ -67,7 +67,7 @@ namespace Asteroids.Entities
             transform.rotation = Quaternion.identity;
             rigidbody.isKinematic = false;
 
-            ActiveModel(true);
+            ActivateEntity(true);
             isAlive = true;
         }
 
@@ -167,7 +167,7 @@ namespace Asteroids.Entities
 
         protected override void ResolveEntitiesCollision(BaseGameEntity entity)
         {
-            if (entity is Asteroid)
+            if (entity is AsteroidState)
                 Destroy();
         }
 
@@ -176,7 +176,7 @@ namespace Asteroids.Entities
             isAlive = false;
             audioSource.Stop();
             PlayDestroyFXs();
-            ActiveModel(false);
+            ActivateEntity(false);
 
             Messenger<bool>.Broadcast("OnEndGame", false);
         }
