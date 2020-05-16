@@ -21,4 +21,4 @@ MonoBehaviour:
   RocketMaxSpeed: 150
   RocketsPerShot: 5
   ShotArc: 30
-  DelayDespawn: 2
+  DelayDespawn: 1.5

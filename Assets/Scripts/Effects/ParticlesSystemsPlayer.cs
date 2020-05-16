@@ -8,7 +8,7 @@ namespace Asteroids.Effects
     public class ParticlesSystemsPlayer : PoolMember
     {
         [SerializeField]
-        protected float duration;
+        protected float delayDespawn;
 
         [SerializeField]
         protected ParticleSystem[] particleSystems;
@@ -21,7 +21,7 @@ namespace Asteroids.Effects
         protected virtual IEnumerator PlayFXs()
         {
             PlayParticleSystems();
-            yield return new WaitForSeconds(duration);
+            yield return new WaitForSeconds(delayDespawn);
             SimplePool.Despawn(this);
         }
 

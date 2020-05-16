@@ -44,7 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f05900bf6c00044f91931eaa6379243, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  duration: 4
+  delayDespawn: 1
   particleSystems:
   - {fileID: 9177814412512381330}
 --- !u!1 &9071032372350964030

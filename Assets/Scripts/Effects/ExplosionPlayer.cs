@@ -44,9 +44,9 @@ namespace Asteroids.Effects
             audioSource.Play();
             PlayParticleSystems();
 
-            while (time < duration)
+            while (time < delayDespawn)
             {
-                step = time / duration;
+                step = time / delayDespawn;
 
                 chromaticAberration.intensity.Override(chromaticAbIntesity.Evaluate(step));
                 lensDistortion.intensity.Override(lensDistIntesity.Evaluate(step));
