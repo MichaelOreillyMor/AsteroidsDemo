@@ -13,6 +13,8 @@ namespace Asteroids.Entities
     /// </summary>
     public class GunState : MonoBehaviour
     {
+        private static int shotsIDsCount;
+
         private GunData gunData;
 
         private float time;
@@ -60,22 +62,37 @@ namespace Asteroids.Entities
 
             if (time > nextShotTime)
             {
+                int shotID = GenerateShotID();
                 nextShotTime = time + reloadTime;
 
                 foreach (Quaternion rotationRocket in rotationRockets)
                 {
-                    ShotRocket(currentVel, rotationRocket);
+                    ShotRocket(currentVel, rotationRocket, shotID);
                 }
 
                 Messenger.Broadcast("OnShot");
             }
         }
 
-        private void ShotRocket(Vector3 currentVel, Quaternion rotationRocket)
+        /// <summary>
+        /// Generates an simple ID for all the shot´s rockets 
+        /// </summary>
+        /// <returns>shot ID</returns>
+        private int GenerateShotID() 
+        {
+            if (shotsIDsCount == int.MaxValue)
+                shotsIDsCount = 0;
+
+            shotsIDsCount++;
+
+            return shotsIDsCount;
+        }
+
+        private void ShotRocket(Vector3 currentVel, Quaternion rotationRocket, int shotID)
         {
             Quaternion relativeRotation = transform.rotation * rotationRocket;
             RocketState rocket = (RocketState)SimplePool.Spawn(gunData.RocketPref, transform.position, relativeRotation);
-            rocket.Setup(gunData, currentVel);
+            rocket.Setup(gunData, currentVel, shotID);
         }
 
         public void Unsetup()

@@ -16,11 +16,14 @@ namespace Asteroids.Entities
         private float initSpeed;
         private float initMaxRot;
 
-        public void Setup(AsteroidStageData asteroidStageData, Vector3 direction)
+        private int shotCreatedAsteroidID;
+
+        public void Setup(AsteroidStageData asteroidStageData, Vector3 direction, int shotCreatedAsteroidID)
         {
             base.Setup();
 
             this.asteroidStageData = asteroidStageData;
+            this.shotCreatedAsteroidID = shotCreatedAsteroidID;
 
             initSpeed = asteroidStageData.InitSpeed;
             initMaxRot = asteroidStageData.InitMaxRot;
@@ -58,7 +61,10 @@ namespace Asteroids.Entities
             {
                 if (entity is RocketState)
                 {
-                    Destroy(entity.transform.position);
+                    int shotID = entity.GetComponent<RocketState>().ShotID;
+
+                    if (shotID != shotCreatedAsteroidID)
+                        Destroy(entity.transform.position, shotID);
                 }
                 else
                 {
@@ -67,12 +73,12 @@ namespace Asteroids.Entities
             }
         }
 
-        private void Destroy(Vector3 rocketPos)
+        private void Destroy(Vector3 rocketPos, int shotID)
         {
             PlayDestroyFXs(); 
             Unsetup();
 
-            AsteroidDestroyedMessage asteroidDestroyedMessage = new AsteroidDestroyedMessage(asteroidStageData, transform.position, rocketPos);
+            AsteroidDestroyedMessage asteroidDestroyedMessage = new AsteroidDestroyedMessage(asteroidStageData, transform.position, rocketPos, shotID);
             Messenger<AsteroidDestroyedMessage>.Broadcast("OnAsteroidDestroyed", asteroidDestroyedMessage);
         }
     }

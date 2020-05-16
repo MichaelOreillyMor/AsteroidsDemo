@@ -1,7 +1,7 @@
 -----High priority tasks-----
 
 -Secondary gun it´s loaded +1 when you hit an asteroid with a rocket, max 3 ammunition.
--avoid asteroids destroyed by the same shot without using a coroutine and MonoBehaviour for AsteroidsHandler, I can do it giving an ID to the rockets of the same shot.
+-Define a max velocity for all the asteroids independently of stage.
 
 -Create an AI that loads asteroids patterns instead of levels, this patterns will have a level of difficulty assigned.
  They will be spawned depending on: 

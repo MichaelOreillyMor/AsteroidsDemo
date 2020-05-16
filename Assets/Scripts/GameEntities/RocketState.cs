@@ -11,15 +11,18 @@ namespace Asteroids.Entities
     /// </summary>
     public class RocketState : BaseGameEntity
     {
+        public int ShotID { get; private set; }
+
         private float acceleration;
         private float maxSpeed;
 
         private float lifeTime;
         private float delayDespawn;
 
-        public void Setup(GunData gunData, Vector3 currentVel)
+        public void Setup(GunData gunData, Vector3 currentVel, int shotID)
         {
             base.Setup();
+            this.ShotID = shotID;
 
             acceleration = gunData.RocketAcceleration;
             maxSpeed = gunData.RocketMaxSpeed;

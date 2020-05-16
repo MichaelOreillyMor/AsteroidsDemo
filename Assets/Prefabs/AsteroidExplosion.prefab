@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3886008510585480591}
   - component: {fileID: -323653402742492623}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: AsteroidExplosion
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -58,7 +58,7 @@ GameObject:
   - component: {fileID: 9074612087918503606}
   - component: {fileID: 9177814412512381330}
   - component: {fileID: 9161367364370692374}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: AsteroidsParticles
   m_TagString: Untagged
   m_Icon: {fileID: 0}

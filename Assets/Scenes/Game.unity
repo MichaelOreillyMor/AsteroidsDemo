@@ -3656,7 +3656,6 @@ GameObject:
   - component: {fileID: 1461340191}
   - component: {fileID: 1461340190}
   - component: {fileID: 1461340192}
-  - component: {fileID: 1461340194}
   - component: {fileID: 1461340193}
   m_Layer: 0
   m_Name: GameState
@@ -3711,7 +3710,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4349f33c5d85fc44fa8f732999e2729e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  asteroidsHandler: {fileID: 1461340194}
 --- !u!82 &1461340193
 AudioSource:
   m_ObjectHideFlags: 0
@@ -3724,7 +3722,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 5c19c89721779824c97ac3065eea791f, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.5
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -3808,18 +3806,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &1461340194
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1461340189}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 203e9116c2cdf964cb6171ec03dd15bd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1503288189
 GameObject:
   m_ObjectHideFlags: 0
