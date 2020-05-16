@@ -1,5 +1,4 @@
 ﻿using Asteroids.Datas;
-using Asteroids.Systems;
 using Asteroids.Input;
 using Asteroids.Utilities.Messages;
 
@@ -15,41 +14,58 @@ namespace Asteroids.Entities
     /// </summary>
     public class SpaceshipState : BaseGameEntity, GameControls.ISpaceshipActions
     {
-        private const float THRUSTER_VEL_ON_MOVE = 0.6f;
+        #region Guns vars
 
         [SerializeField]
-        private GunState gunState;
+        private GunState mainGunState;
 
-        private SpaceshipData spaceshipData;
+        [SerializeField]
+        private GunState secondaryGunState;
+
+        private bool isShotingMainGun;
+        private bool isShotingSecondaryGun;
+        private bool isAlive;
+
+        #endregion
+
+        #region Movement vars
+
+        private float speed;
+        private float maxVelocity;
+        private float rotationSpeed;
+        private float rotationDir;
+
+        #endregion
+
+        #region Input vars
+
+        private bool isMovingForward;
+        private bool wasMovingForwardLastFrame;
+
+        #endregion
+
+        #region Thruster vars
 
         private ParticleSystem thruster;
         private ParticleSystem.VelocityOverLifetimeModule thrusterVelMod;
+        private float thrusterVelocity;
 
-        public float speed;
-        public float maxVelocity;
-        public float rotationSpeed;
-
-        private bool isShoting;
-        private bool isMovingForward;
-        private float rotationDir;
-
-        private bool wasMovingForwardLastFrame;
-
-        private bool isAlive;
+        #endregion
 
         #region Setup/Unsetup methods
 
         public void Setup(SpaceshipData spaceshipData)
         {           
-            this.spaceshipData = spaceshipData;
-
             speed = spaceshipData.Speed;
             maxVelocity = spaceshipData.MaxVelocity;
             rotationSpeed = spaceshipData.RotationSpeed;
 
             InstantiateSpaceshipModel(spaceshipData.SpaceshipPref);
-            gunState.Setup(spaceshipData.GunData);
 
+            mainGunState.Setup(spaceshipData.MainGunData);
+            secondaryGunState.Setup(spaceshipData.SecondaryGunData);
+
+            thrusterVelocity = spaceshipData.ThrusterVelocity;
             thruster = model3D.GetComponentInChildren<ParticleSystem>();
             thrusterVelMod = thruster.velocityOverLifetime;
 
@@ -82,13 +98,16 @@ namespace Asteroids.Entities
 
         public override void Unsetup()
         {
-            gunState.Unsetup();
+            mainGunState.Unsetup();
+            secondaryGunState.Unsetup();
+
             base.Unsetup();
         }
 
         #endregion
 
         #region Actions
+
         protected override void FixedUpdate()
         {
             if (isAlive)
@@ -111,12 +130,16 @@ namespace Asteroids.Entities
         {
             if (isAlive)
             {
-                if (isShoting)
+                if (isShotingMainGun)
                 {
-                    Shot();
+                    MainShot();
+                }
+                else if (isShotingSecondaryGun)
+                {
+                    SecondaryShot();
                 }
 
-                if(wasMovingForwardLastFrame != isMovingForward)
+                if (wasMovingForwardLastFrame != isMovingForward)
                 {
                     SetThrusterEmission();
                     wasMovingForwardLastFrame = isMovingForward;
@@ -126,12 +149,16 @@ namespace Asteroids.Entities
 
         private void SetThrusterEmission()
         {
-            thrusterVelMod.z = (isMovingForward) ? THRUSTER_VEL_ON_MOVE : 0f;
+            thrusterVelMod.z = (isMovingForward) ? thrusterVelocity : 0f;
         }
 
-        public void Shot()
+        public void MainShot()
         {
-            gunState.Shot(rigidbody.velocity);
+            mainGunState.Shot(rigidbody.velocity);
+        }
+        public void SecondaryShot()
+        {
+            secondaryGunState.Shot(rigidbody.velocity);
         }
 
         public void Rotate()
@@ -146,9 +173,14 @@ namespace Asteroids.Entities
             rigidbody.velocity = Vector3.ClampMagnitude(rigidbody.velocity, maxVelocity);
         }
 
-        public void OnShot(InputAction.CallbackContext context)
+        public void OnMainShot(InputAction.CallbackContext context)
         {
-            isShoting = context.ReadValue<float>() == 1f;
+            isShotingMainGun = context.ReadValue<float>() == 1f;
+        }
+
+        public void OnSecondaryShot(InputAction.CallbackContext context)
+        {
+            isShotingSecondaryGun = context.ReadValue<float>() == 1f;
         }
 
         public void OnMoveForward(InputAction.CallbackContext context)

@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cb3bbded94081f42b4903ff4c4c86c7, type: 3}
   m_Name: SmallAsteroid
   m_EditorClassIdentifier: 
-  Speed: 1600
+  InitSpeed: 1600
+  InitMaxRot: 20
   Scale: 0.35
-  mass: 2
+  Mass: 2

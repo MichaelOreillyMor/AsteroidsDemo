@@ -1,5 +1,48 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2701994731154885066
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6695753955965560381}
+  - component: {fileID: 1031347985838613790}
+  m_Layer: 10
+  m_Name: SecondaryGunState
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6695753955965560381
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2701994731154885066}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0.7}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 7073002784647961146}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1031347985838613790
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2701994731154885066}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e1bd62f66dc9fa4409c177b35519f1c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7073002784647961144
 GameObject:
   m_ObjectHideFlags: 0
@@ -32,6 +75,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 7073002784893353940}
+  - {fileID: 6695753955965560381}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -82,10 +126,8 @@ MonoBehaviour:
   model3D: {fileID: 3886008510584994223, guid: 51e2fc45404a7b74e897eabf0f557547, type: 3}
   particlesSystemsPlayer: {fileID: 3781552892870564977, guid: 51e2fc45404a7b74e897eabf0f557547,
     type: 3}
-  gunState: {fileID: 7073002784893353939}
-  speed: 0
-  maxVelocity: 0
-  rotationSpeed: 0
+  mainGunState: {fileID: 7073002784893353939}
+  secondaryGunState: {fileID: 1031347985838613790}
 --- !u!82 &7073002784647961149
 AudioSource:
   m_ObjectHideFlags: 0
@@ -193,7 +235,7 @@ GameObject:
   - component: {fileID: 7073002784893353940}
   - component: {fileID: 7073002784893353939}
   m_Layer: 10
-  m_Name: GunState
+  m_Name: MainGunState
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -21,9 +21,17 @@ namespace Asteroids.Input
             ""id"": ""a5aa67cb-3209-4fd9-837c-19f64495c2f2"",
             ""actions"": [
                 {
-                    ""name"": ""Shot"",
+                    ""name"": ""MainShot"",
                     ""type"": ""PassThrough"",
                     ""id"": ""33cb3cc7-572f-4849-844a-eb5a41136b99"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""SecondaryShot"",
+                    ""type"": ""PassThrough"",
+                    ""id"": ""cc59fadf-4cb8-45f0-a2a4-3a3715ede974"",
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """"
@@ -53,7 +61,7 @@ namespace Asteroids.Input
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Shot"",
+                    ""action"": ""MainShot"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -155,6 +163,17 @@ namespace Asteroids.Input
                     ""action"": ""Rotate"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""3b44a6e2-52b9-4f2d-8dfb-6898a6b0b02e"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SecondaryShot"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -190,7 +209,8 @@ namespace Asteroids.Input
 }");
             // Spaceship
             m_Spaceship = asset.FindActionMap("Spaceship", throwIfNotFound: true);
-            m_Spaceship_Shot = m_Spaceship.FindAction("Shot", throwIfNotFound: true);
+            m_Spaceship_MainShot = m_Spaceship.FindAction("MainShot", throwIfNotFound: true);
+            m_Spaceship_SecondaryShot = m_Spaceship.FindAction("SecondaryShot", throwIfNotFound: true);
             m_Spaceship_MoveForward = m_Spaceship.FindAction("MoveForward", throwIfNotFound: true);
             m_Spaceship_Rotate = m_Spaceship.FindAction("Rotate", throwIfNotFound: true);
             // Game
@@ -245,14 +265,16 @@ namespace Asteroids.Input
         // Spaceship
         private readonly InputActionMap m_Spaceship;
         private ISpaceshipActions m_SpaceshipActionsCallbackInterface;
-        private readonly InputAction m_Spaceship_Shot;
+        private readonly InputAction m_Spaceship_MainShot;
+        private readonly InputAction m_Spaceship_SecondaryShot;
         private readonly InputAction m_Spaceship_MoveForward;
         private readonly InputAction m_Spaceship_Rotate;
         public struct SpaceshipActions
         {
             private @GameControls m_Wrapper;
             public SpaceshipActions(@GameControls wrapper) { m_Wrapper = wrapper; }
-            public InputAction @Shot => m_Wrapper.m_Spaceship_Shot;
+            public InputAction @MainShot => m_Wrapper.m_Spaceship_MainShot;
+            public InputAction @SecondaryShot => m_Wrapper.m_Spaceship_SecondaryShot;
             public InputAction @MoveForward => m_Wrapper.m_Spaceship_MoveForward;
             public InputAction @Rotate => m_Wrapper.m_Spaceship_Rotate;
             public InputActionMap Get() { return m_Wrapper.m_Spaceship; }
@@ -264,9 +286,12 @@ namespace Asteroids.Input
             {
                 if (m_Wrapper.m_SpaceshipActionsCallbackInterface != null)
                 {
-                    @Shot.started -= m_Wrapper.m_SpaceshipActionsCallbackInterface.OnShot;
-                    @Shot.performed -= m_Wrapper.m_SpaceshipActionsCallbackInterface.OnShot;
-                    @Shot.canceled -= m_Wrapper.m_SpaceshipActionsCallbackInterface.OnShot;
+                    @MainShot.started -= m_Wrapper.m_SpaceshipActionsCallbackInterface.OnMainShot;
+                    @MainShot.performed -= m_Wrapper.m_SpaceshipActionsCallbackInterface.OnMainShot;
+                    @MainShot.canceled -= m_Wrapper.m_SpaceshipActionsCallbackInterface.OnMainShot;
+                    @SecondaryShot.started -= m_Wrapper.m_SpaceshipActionsCallbackInterface.OnSecondaryShot;
+                    @SecondaryShot.performed -= m_Wrapper.m_SpaceshipActionsCallbackInterface.OnSecondaryShot;
+                    @SecondaryShot.canceled -= m_Wrapper.m_SpaceshipActionsCallbackInterface.OnSecondaryShot;
                     @MoveForward.started -= m_Wrapper.m_SpaceshipActionsCallbackInterface.OnMoveForward;
                     @MoveForward.performed -= m_Wrapper.m_SpaceshipActionsCallbackInterface.OnMoveForward;
                     @MoveForward.canceled -= m_Wrapper.m_SpaceshipActionsCallbackInterface.OnMoveForward;
@@ -277,9 +302,12 @@ namespace Asteroids.Input
                 m_Wrapper.m_SpaceshipActionsCallbackInterface = instance;
                 if (instance != null)
                 {
-                    @Shot.started += instance.OnShot;
-                    @Shot.performed += instance.OnShot;
-                    @Shot.canceled += instance.OnShot;
+                    @MainShot.started += instance.OnMainShot;
+                    @MainShot.performed += instance.OnMainShot;
+                    @MainShot.canceled += instance.OnMainShot;
+                    @SecondaryShot.started += instance.OnSecondaryShot;
+                    @SecondaryShot.performed += instance.OnSecondaryShot;
+                    @SecondaryShot.canceled += instance.OnSecondaryShot;
                     @MoveForward.started += instance.OnMoveForward;
                     @MoveForward.performed += instance.OnMoveForward;
                     @MoveForward.canceled += instance.OnMoveForward;
@@ -325,7 +353,8 @@ namespace Asteroids.Input
         public GameActions @Game => new GameActions(this);
         public interface ISpaceshipActions
         {
-            void OnShot(InputAction.CallbackContext context);
+            void OnMainShot(InputAction.CallbackContext context);
+            void OnSecondaryShot(InputAction.CallbackContext context);
             void OnMoveForward(InputAction.CallbackContext context);
             void OnRotate(InputAction.CallbackContext context);
         }

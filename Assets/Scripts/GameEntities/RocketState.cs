@@ -13,18 +13,23 @@ namespace Asteroids.Entities
     {
         private float acceleration;
         private float maxSpeed;
-        private float delayFX;
+
+        private float lifeTime;
+        private float delayDespawn;
+
         public void Setup(GunData gunData, Vector3 currentVel)
         {
             base.Setup();
 
             acceleration = gunData.RocketAcceleration;
             maxSpeed = gunData.RocketMaxSpeed;
-            delayFX = gunData.DelayToFX;
+
+            delayDespawn = gunData.DelayDespawn;
+            lifeTime = gunData.RocketLifeTime;
 
             rigidbody.velocity = currentVel;
 
-            StartCoroutine(DestroyDelay(gunData.RocketLifeTime));
+            StartCoroutine(DestroyDelay(lifeTime));
             audioSource.Play();
         }
 
@@ -46,20 +51,19 @@ namespace Asteroids.Entities
         private IEnumerator DestroyDelay(float delay)
         {
             yield return new WaitForSeconds(delay);
+
+            ActivateEntity(false);
             PlayDestroyFXs();
+
+            yield return new WaitForSeconds(delayDespawn);
+
             Unsetup();
         }
 
         protected override void ResolveEntitiesCollision(BaseGameEntity entity)
         {
-            Destroy();
-        }
-
-        private void Destroy()
-        {
             StopAllCoroutines();
-            PlayDestroyFXs();
-            Unsetup();
+            StartCoroutine(DestroyDelay(0f));
         }
     }
 }

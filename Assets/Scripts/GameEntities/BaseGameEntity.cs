@@ -1,5 +1,4 @@
-﻿using Asteroids.Systems;
-using Asteroids.Effects;
+﻿using Asteroids.Effects;
 using Asteroids.Utilities.Pools;
 
 using UnityEngine;
@@ -12,7 +11,7 @@ namespace Asteroids.Entities
     public abstract class BaseGameEntity : PoolMember
     {
         [SerializeField]
-        protected new AudioSource audioSource;
+        protected AudioSource audioSource;
 
         [SerializeField]
         protected new Collider collider;
@@ -43,11 +42,9 @@ namespace Asteroids.Entities
             ActivateEntity(false);
         }
 
-        public virtual void ActivateEntity(bool b)
+        protected virtual void ActivateEntity(bool b)
         {
-            if(model3D)
-                model3D.SetActive(b);
-
+            model3D.SetActive(b);
             collider.enabled = b;
             rigidbody.isKinematic = !b;
         }

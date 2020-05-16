@@ -7,8 +7,11 @@ namespace Asteroids.Datas
     public class AsteroidsLevelsData : ScriptableObject
     {
         public AsteroidState AsteroidPref;
-        public AsteroidsStagesData AsteroidsStagesData;
+        public int PreloadAsteroidPrefs;
 
+        public int DelayToStartLevels;
+
+        public AsteroidsStagesData AsteroidsStagesData;
         public AsteroidsLevelData[] Levels;
     }
 }

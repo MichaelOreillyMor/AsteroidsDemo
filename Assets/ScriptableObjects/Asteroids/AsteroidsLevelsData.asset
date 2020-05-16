@@ -14,6 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   AsteroidPref: {fileID: 114398606274069264, guid: b7e984bfe372be047909de22c84ff456,
     type: 3}
+  PreloadAsteroidPrefs: 10
+  DelayToStartLevels: 2
   AsteroidsStagesData: {fileID: 11400000, guid: a9daa6f5c3ff9a744b3b80e4938fa083,
     type: 2}
   Levels:

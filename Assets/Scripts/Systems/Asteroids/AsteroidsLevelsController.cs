@@ -11,20 +11,21 @@ namespace Asteroids.Systems
     /// </summary>
     public class AsteroidsLevelsController : MonoBehaviour
     {
-        private static int TIME_TO_START_LEVEL = 2;
-
-        public AsteroidsHandler asteroidsHandler { get; set; }
-
+        private AsteroidsHandler asteroidsHandler;
         private AsteroidsLevelsData asteroidsLevelsData;
+
         private int currentLevel;
+        private int delayToStartLevels;
 
         public void Setup(AsteroidsLevelsData asteroidsLevelsData)
         {
             this.asteroidsLevelsData = asteroidsLevelsData;
-            asteroidsHandler = new AsteroidsHandler(asteroidsLevelsData.AsteroidPref, asteroidsLevelsData.AsteroidsStagesData, LevelCompletedCallback);
+            delayToStartLevels = asteroidsLevelsData.DelayToStartLevels;
 
-            currentLevel = 0;
-            StartCoroutine(DelayLevelLoad());
+            asteroidsHandler = new AsteroidsHandler(asteroidsLevelsData.AsteroidPref, asteroidsLevelsData.PreloadAsteroidPrefs, 
+                                                    asteroidsLevelsData.AsteroidsStagesData, LevelCompletedCallback);
+
+            ResetLevels();
         }
 
         public void Unsetup()
@@ -36,9 +37,8 @@ namespace Asteroids.Systems
 
         public void ResetLevels()
         {
-            asteroidsHandler.ResetAsteroids();
-
             currentLevel = 0;
+            asteroidsHandler.ResetAsteroids();
             StartCoroutine(DelayLevelLoad());
         }
 
@@ -59,7 +59,7 @@ namespace Asteroids.Systems
         private IEnumerator DelayLevelLoad()
         {
             Messenger<int>.Broadcast("OnStartLevel", currentLevel);
-            yield return new WaitForSeconds(TIME_TO_START_LEVEL);
+            yield return new WaitForSeconds(delayToStartLevels);
             asteroidsHandler.LoadLevel(asteroidsLevelsData.Levels[currentLevel]);
         }
 

@@ -13,20 +13,45 @@ namespace Asteroids.Entities
     /// </summary>
     public class GunState : MonoBehaviour
     {
-        private const int PRELOAD_BULLETS = 5;
-
         private GunData gunData;
 
         private float time;
         private float reloadTime;
         private float nextShotTime;
 
+        [SerializeField]
+        private Quaternion[] rotationRockets;
+
+        private int rocketsPerShot;
+        private int shotArc;
+
         public void Setup(GunData gunData)
         {
             this.gunData = gunData;
             reloadTime = gunData.ReloadTime;
+            rocketsPerShot = gunData.RocketsPerShot;
+            shotArc = gunData.ShotArc;
 
-            SimplePool.Preload(gunData.BulletPref, PRELOAD_BULLETS);
+            SetRotationRockets();
+            SimplePool.Preload(gunData.RocketPref, gunData.PreloadRocketPrefs);
+        }
+
+        private void SetRotationRockets()
+        {
+            rotationRockets = new Quaternion[rocketsPerShot];
+            rotationRockets[0] = Quaternion.Euler(Vector3.up);
+
+            if (rocketsPerShot > 1)
+            {
+                Vector3 halfRot = Vector3.up * (shotArc / 2);
+                float step;
+
+                for (int i = 0; i < rocketsPerShot; i++)
+                {
+                    step = (float)i / (rocketsPerShot - 1);
+                    rotationRockets[i] = Quaternion.Euler(Vector3.Lerp(-halfRot, halfRot, step));
+                }
+            }
         }
 
         public void Shot(Vector3 currentVel)
@@ -36,22 +61,34 @@ namespace Asteroids.Entities
             if (time > nextShotTime)
             {
                 nextShotTime = time + reloadTime;
-                RocketState rocket = (RocketState)SimplePool.Spawn(gunData.BulletPref, transform.position, transform.rotation);
-                rocket.Setup(gunData, currentVel);
+
+                foreach (Quaternion rotationRocket in rotationRockets)
+                {
+                    ShotRocket(currentVel, rotationRocket);
+                }
 
                 Messenger.Broadcast("OnShot");
             }
         }
 
+        private void ShotRocket(Vector3 currentVel, Quaternion rotationRocket)
+        {
+            Quaternion relativeRotation = transform.rotation * rotationRocket;
+            RocketState rocket = (RocketState)SimplePool.Spawn(gunData.RocketPref, transform.position, relativeRotation);
+            rocket.Setup(gunData, currentVel);
+        }
+
         public void Unsetup()
         {
-            List<PoolMember> rocketsActive = SimplePool.GetActiveInstances(gunData.BulletPref);
-            RocketState rocket;
+            List<PoolMember> rocketsActive = SimplePool.GetActiveInstances(gunData.RocketPref);
 
-            for (int i = rocketsActive.Count - 1; i >= 0; i--)
+            if (rocketsActive.Count > 0)
             {
-                rocket = (RocketState)rocketsActive[i];
-                rocket.Unsetup();
+                for (int i = rocketsActive.Count - 1; i >= 0; i--)
+                {
+                    RocketState rocket = (RocketState)rocketsActive[i];
+                    rocket.Unsetup();
+                }
             }
         }
     }

@@ -10,12 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f28ffc8924b3a5448b50a50e519ba0d0, type: 3}
-  m_Name: SecondaryGun
+  m_Name: RocketLauncher
   m_EditorClassIdentifier: 
-  BulletPref: {fileID: 5517428538837054779, guid: 76f49af0a52109947b5f6879b5700005,
+  RocketPref: {fileID: 5517428538837054779, guid: 4922995df2a7ad54ba8aefde0066bee3,
     type: 3}
+  PreloadRocketPrefs: 3
   ReloadTime: 0.5
-  RocketLifeTime: 0.6
-  RocketAcceleration: 50
-  RocketMaxSpeed: 100
-  DelayToFX: 2
+  RocketLifeTime: 1
+  RocketAcceleration: 60
+  RocketMaxSpeed: 45
+  RocketsPerShot: 1
+  ShotArc: 0
+  DelayDespawn: 0

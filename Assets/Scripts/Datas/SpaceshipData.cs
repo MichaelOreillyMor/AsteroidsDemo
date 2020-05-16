@@ -6,12 +6,15 @@ namespace Asteroids.Datas
     public class SpaceshipData : ScriptableObject
     {
         public GameObject SpaceshipPref;
-        public GunData GunData;
+
+        public GunData MainGunData;
+        public GunData SecondaryGunData;
 
         public float Speed;
         public float MaxVelocity;
         public float RotationSpeed;
 
+        public float ThrusterVelocity;
         public AudioClip EngineSound;
     }
 }

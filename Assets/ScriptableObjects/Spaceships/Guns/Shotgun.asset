@@ -10,12 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f28ffc8924b3a5448b50a50e519ba0d0, type: 3}
-  m_Name: MainGun
+  m_Name: Shotgun
   m_EditorClassIdentifier: 
-  BulletPref: {fileID: 5517428538837054779, guid: 4922995df2a7ad54ba8aefde0066bee3,
+  RocketPref: {fileID: 5517428538837054779, guid: 76f49af0a52109947b5f6879b5700005,
     type: 3}
-  ReloadTime: 0.5
-  RocketLifeTime: 1.1
-  RocketAcceleration: 60
-  RocketMaxSpeed: 45
-  DelayToFX: 0
+  PreloadRocketPrefs: 6
+  ReloadTime: 1
+  RocketLifeTime: 0.53
+  RocketAcceleration: 90
+  RocketMaxSpeed: 150
+  RocketsPerShot: 5
+  ShotArc: 30
+  DelayDespawn: 2

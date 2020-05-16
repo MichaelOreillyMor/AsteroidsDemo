@@ -11,31 +11,36 @@ namespace Asteroids.Entities
      /// </summary>
     public class AsteroidState : BaseGameEntity
     {
-        private static float INIT_ROT_MULT = 0.0035f;
         private AsteroidStageData asteroidStageData;
+
+        private float initSpeed;
+        private float initMaxRot;
 
         public void Setup(AsteroidStageData asteroidStageData, Vector3 direction)
         {
             base.Setup();
+
             this.asteroidStageData = asteroidStageData;
 
-            SetRandInitForces();
+            initSpeed = asteroidStageData.InitSpeed;
+            initMaxRot = asteroidStageData.InitMaxRot;
 
-            transform.localScale = Vector3.one * asteroidStageData.Scale;
-
-            rigidbody.mass = asteroidStageData.mass;
-            rigidbody.AddForce(direction * asteroidStageData.Speed);
+            SetPhysicalProperties(asteroidStageData);
+            SetRandInitForces(direction);
         }
 
-        private void SetRandInitForces()
+        private void SetPhysicalProperties(AsteroidStageData asteroidStageData)
         {
-            transform.rotation = Quaternion.Euler(UnityEngine.Random.Range(0, 360),
-                UnityEngine.Random.Range(0, 360), UnityEngine.Random.Range(0, 360));
+            transform.localScale = Vector3.one * asteroidStageData.Scale;
+            transform.rotation = Quaternion.Euler(Random.insideUnitSphere * 180f);
+            rigidbody.mass = asteroidStageData.Mass;
+        }
 
-            float initMaxRot = asteroidStageData.Speed * INIT_ROT_MULT;
-            Vector3 randRot = new Vector3(UnityEngine.Random.Range(-initMaxRot, initMaxRot),
-                UnityEngine.Random.Range(-initMaxRot, initMaxRot), UnityEngine.Random.Range(-initMaxRot, initMaxRot));
+        private void SetRandInitForces(Vector3 direction)
+        {
+            Vector3 randRot = Random.insideUnitSphere * initMaxRot;
 
+            rigidbody.AddForce(direction * initSpeed);
             rigidbody.AddTorque(randRot, ForceMode.Impulse);
         }
 
@@ -43,8 +48,8 @@ namespace Asteroids.Entities
         {
             base.Unsetup();
 
-            asteroidStageData = null;
             audioSource.Stop();
+            asteroidStageData = null;
             SimplePool.Despawn(this);
         }
 

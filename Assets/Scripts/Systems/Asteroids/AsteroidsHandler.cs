@@ -14,7 +14,6 @@ namespace Asteroids.Systems
     /// </summary>
     public class AsteroidsHandler
     {
-        private const int PRELOAD_ASTEROIDS = 10;
         private const int SMALL_ASTEROIDS_PER_BIG = 4;
 
         private AsteroidState asteroidPref;
@@ -27,7 +26,7 @@ namespace Asteroids.Systems
 
         private Camera camera;
 
-        public AsteroidsHandler(AsteroidState asteroidPref, AsteroidsStagesData asteroidsStagesData, Action asteroidsCleanedCallback)
+        public AsteroidsHandler(AsteroidState asteroidPref, int preloadAsteroidPrefs, AsteroidsStagesData asteroidsStagesData, Action asteroidsCleanedCallback)
         {
             this.asteroidPref = asteroidPref;
             this.asteroidsStagesData = asteroidsStagesData;
@@ -35,7 +34,7 @@ namespace Asteroids.Systems
 
             camera = Camera.main;
 
-            SimplePool.Preload(asteroidPref, PRELOAD_ASTEROIDS);
+            SimplePool.Preload(asteroidPref, preloadAsteroidPrefs);
             Messenger<AsteroidDestroyedMessage>.AddListener("OnAsteroidDestroyed", ProcessAsteroidDestroyed);
         }
 
@@ -74,12 +73,14 @@ namespace Asteroids.Systems
         public void ResetAsteroids()
         {
             List<PoolMember> asteroidsActive = SimplePool.GetActiveInstances(asteroidPref);
-            AsteroidState asteroid;
 
-            for (int i = asteroidsActive.Count - 1; i >= 0; i--)
+            if (asteroidsActive.Count > 0)
             {
-                asteroid = (AsteroidState)asteroidsActive[i];
-                asteroid.Unsetup();
+                for (int i = asteroidsActive.Count - 1; i >= 0; i--)
+                {
+                    AsteroidState asteroid = (AsteroidState)asteroidsActive[i];
+                    asteroid.Unsetup();
+                }
             }
         }
 
@@ -93,7 +94,6 @@ namespace Asteroids.Systems
 
             if (nexStage != null)
                 SpawnSplitAsteroids(asteroidDestroyedMessage.AsteroidPos, asteroidDestroyedMessage.RocketPos, nexStage);
-
             else
                 AddCleanedAsteroid();
         }
@@ -106,20 +106,24 @@ namespace Asteroids.Systems
                 asteroidsCleanedCallback();
         }
 
-        private void SpawnSplitAsteroids(Vector3 asteroidPos, Vector3 rocketPos, AsteroidStageData nexStage)
+        private void SpawnSplitAsteroids(Vector3 asteroidPos, Vector3 rocketPos, AsteroidStageData asteroidStageData)
         {
-            float distance = Vector3.Distance(asteroidPos, rocketPos);
+            SpawnSplitAsteroid(asteroidStageData, asteroidPos, rocketPos, Vector3.up);
+            SpawnSplitAsteroid(asteroidStageData, asteroidPos, rocketPos, Vector3.down);
+        }
 
-            Vector3 dirHit = (rocketPos - asteroidPos).normalized;
+        private void SpawnSplitAsteroid(AsteroidStageData asteroidStageData, Vector3 prevAsteroidsPos, Vector3 rocketPos, Vector3 hitDirection)
+        {
+            float distance = Vector3.Distance(prevAsteroidsPos, rocketPos);
 
-            Vector3 leftAsteroidPos = asteroidPos + new Vector3(dirHit.z, 0, -dirHit.x) * distance;
-            Vector3 rightAsteroidPos = asteroidPos + new Vector3(-dirHit.z, 0, dirHit.x) * distance;
+            Vector3 direction = rocketPos - prevAsteroidsPos;
+            direction = Vector3.Cross(direction, hitDirection).normalized;
+            direction *= distance;
 
-            Vector3 leftAsteroidDir = (leftAsteroidPos - asteroidPos).normalized;
-            Vector3 rightAsteroidDir = (rightAsteroidPos - asteroidPos).normalized;
-
-            SpawnAsteroid(nexStage, leftAsteroidPos, leftAsteroidDir);
-            SpawnAsteroid(nexStage, rightAsteroidPos, rightAsteroidDir);
+            Vector3 asteroidPos = prevAsteroidsPos + direction;
+            Vector3 asteroidDir = (asteroidPos - prevAsteroidsPos).normalized;
+   
+            SpawnAsteroid(asteroidStageData, asteroidPos, asteroidDir);
         }
 
         #endregion
