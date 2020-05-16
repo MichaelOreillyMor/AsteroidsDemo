@@ -1,8 +1,7 @@
 -----High priority tasks-----
 
--Create a shotgun that it´s loaded +1 when you hit an asteroid with a rocket, max 5 ammunition.
-
--The sun will cover all the screen when you die.
+-Secondary gun it´s loaded +1 when you hit an asteroid with a rocket, max 3 ammunition.
+-avoid asteroids destroyed by the same shot without using a coroutine and MonoBehaviour for AsteroidsHandler, I can do it giving an ID to the rockets of the same shot.
 
 -Create an AI that loads asteroids patterns instead of levels, this patterns will have a level of difficulty assigned.
  They will be spawned depending on: 
