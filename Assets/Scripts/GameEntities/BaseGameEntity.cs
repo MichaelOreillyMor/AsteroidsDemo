@@ -10,6 +10,8 @@ namespace Asteroids.Entities
     /// </summary>
     public abstract class BaseGameEntity : PoolMember
     {
+        protected static ScreenLismitsHandler screenLismitsHandler;
+
         [SerializeField]
         protected AudioSource audioSource;
 
@@ -25,16 +27,16 @@ namespace Asteroids.Entities
         [SerializeField]
         protected ParticlesSystemsPlayer particlesSystemsPlayer;
 
-        protected static ScreenLismitsHandler screenLismitsHandler;
+        protected bool isAlive;
 
         #region Setup/Unsetup methods
 
         public virtual void Setup()
         {
-            ActivateEntity(true);
-
             if(screenLismitsHandler == null)
                 screenLismitsHandler = new ScreenLismitsHandler();
+
+            ActivateEntity(true);
         }
 
         public virtual void Unsetup()
@@ -44,9 +46,12 @@ namespace Asteroids.Entities
 
         protected virtual void ActivateEntity(bool b)
         {
-            model3D.SetActive(b);
+            if(model3D)
+                model3D.SetActive(b);
+
             collider.enabled = b;
             rigidbody.isKinematic = !b;
+            isAlive = b;
         }
 
         #endregion
@@ -68,20 +73,25 @@ namespace Asteroids.Entities
 
         protected abstract void ResolveEntitiesCollision(BaseGameEntity entity);
 
-        private void OnCollisionEnter(Collision other)
+        private void OnCollision(Collider other)
         {
-            BaseGameEntity entity = other.gameObject.GetComponent<BaseGameEntity>();
+            if (isAlive)
+            {
+                BaseGameEntity entity = other.gameObject.GetComponent<BaseGameEntity>();
 
-            if (entity)
-                ResolveEntitiesCollision(entity);
+                if (entity)
+                    ResolveEntitiesCollision(entity);
+            }
+        }
+  
+        private void OnCollisionEnter(Collision collision)
+        {
+            OnCollision(collision.collider);
         }
 
         private void OnTriggerEnter(Collider other)
         {
-            BaseGameEntity entity = other.gameObject.GetComponent<BaseGameEntity>();
-
-            if (entity)
-                ResolveEntitiesCollision(entity);
+            OnCollision(other);
         }
 
         #endregion

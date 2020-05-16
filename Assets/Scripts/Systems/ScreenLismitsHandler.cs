@@ -12,11 +12,11 @@ namespace Asteroids.Entities
 
         private Vector2 limitsAxis_X;
         private Vector2 limitsAxis_Z;
-        private Camera camera;
+        private Camera cameraMain;
 
         public ScreenLismitsHandler()
         {
-            camera = Camera.main;
+            cameraMain = Camera.main;
             CalculateLimits();
         }
 
@@ -24,10 +24,10 @@ namespace Asteroids.Entities
 
         private void CalculateLimits()
         {
-            float height = camera.orthographicSize * 2.0f;
-            float width = height * camera.aspect;
+            float height = cameraMain.orthographicSize * 2.0f;
+            float width = height * cameraMain.aspect;
 
-            Vector3 cameraPosition = camera.transform.position;
+            Vector3 cameraPosition = cameraMain.transform.position;
             limitsAxis_X = new Vector2(cameraPosition.x - width, cameraPosition.x + width) * 0.5f;
             limitsAxis_Z = new Vector2(cameraPosition.z - height, cameraPosition.z + height) * 0.5f;
         }

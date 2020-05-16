@@ -11,7 +11,9 @@ namespace Asteroids.Systems
     /// </summary>
     public class AsteroidsLevelsController : MonoBehaviour
     {
+        [SerializeField]
         private AsteroidsHandler asteroidsHandler;
+
         private AsteroidsLevelsData asteroidsLevelsData;
 
         private int currentLevel;
@@ -22,7 +24,7 @@ namespace Asteroids.Systems
             this.asteroidsLevelsData = asteroidsLevelsData;
             delayToStartLevels = asteroidsLevelsData.DelayToStartLevels;
 
-            asteroidsHandler = new AsteroidsHandler(asteroidsLevelsData.AsteroidPref, asteroidsLevelsData.PreloadAsteroidPrefs, 
+            asteroidsHandler.Setup(asteroidsLevelsData.AsteroidPref, asteroidsLevelsData.PreloadAsteroidPrefs, 
                                                     asteroidsLevelsData.AsteroidsStagesData, LevelCompletedCallback);
 
             ResetLevels();

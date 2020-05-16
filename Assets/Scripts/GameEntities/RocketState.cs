@@ -50,7 +50,8 @@ namespace Asteroids.Entities
 
         private IEnumerator DestroyDelay(float delay)
         {
-            yield return new WaitForSeconds(delay);
+            if(delay > 0)
+                yield return new WaitForSeconds(delay);
 
             ActivateEntity(false);
             PlayDestroyFXs();
@@ -61,6 +62,12 @@ namespace Asteroids.Entities
         }
 
         protected override void ResolveEntitiesCollision(BaseGameEntity entity)
+        {
+            if (isAlive)            
+                Destroy();          
+        }
+
+        private void Destroy()
         {
             StopAllCoroutines();
             StartCoroutine(DestroyDelay(0f));

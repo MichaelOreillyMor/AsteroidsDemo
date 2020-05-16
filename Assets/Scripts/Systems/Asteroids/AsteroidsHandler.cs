@@ -4,6 +4,7 @@ using Asteroids.Utilities.Messages;
 using Asteroids.Utilities.Pools;
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -12,9 +13,10 @@ namespace Asteroids.Systems
     /// <summary>
     /// Handles the load and management of a level´s asteroids
     /// </summary>
-    public class AsteroidsHandler
+    public class AsteroidsHandler : MonoBehaviour
     {
         private const int SMALL_ASTEROIDS_PER_BIG = 4;
+        private const float DELAY_SPLIT_ASTEROID = 0.1f;
 
         private AsteroidState asteroidPref;
         private AsteroidsStagesData asteroidsStagesData;
@@ -24,15 +26,15 @@ namespace Asteroids.Systems
         private int asteroidsToClean;
         private int asteroidsCleaned;
 
-        private Camera camera;
+        private Camera cameraMain;
 
-        public AsteroidsHandler(AsteroidState asteroidPref, int preloadAsteroidPrefs, AsteroidsStagesData asteroidsStagesData, Action asteroidsCleanedCallback)
+        public void Setup(AsteroidState asteroidPref, int preloadAsteroidPrefs, AsteroidsStagesData asteroidsStagesData, Action asteroidsCleanedCallback)
         {
             this.asteroidPref = asteroidPref;
             this.asteroidsStagesData = asteroidsStagesData;
             this.asteroidsCleanedCallback = asteroidsCleanedCallback;
 
-            camera = Camera.main;
+            cameraMain = Camera.main;
 
             SimplePool.Preload(asteroidPref, preloadAsteroidPrefs);
             Messenger<AsteroidDestroyedMessage>.AddListener("OnAsteroidDestroyed", ProcessAsteroidDestroyed);
@@ -58,7 +60,7 @@ namespace Asteroids.Systems
 
         private void LoadAsteroid(AsteroidSpawnInfo asteroidSpawnInfo)
         {
-            Vector3 position = camera.ViewportToWorldPoint(asteroidSpawnInfo.ViewportPosition);
+            Vector3 position = cameraMain.ViewportToWorldPoint(asteroidSpawnInfo.ViewportPosition);
             position.y = 0;
 
             SpawnAsteroid(asteroidsStagesData.BigStage, position, asteroidSpawnInfo.Direction);
@@ -88,12 +90,10 @@ namespace Asteroids.Systems
 
         #region Asteroids destruction methods
 
-        private void ProcessAsteroidDestroyed(AsteroidDestroyedMessage asteroidDestroyedMessage)
+        private void ProcessAsteroidDestroyed(AsteroidDestroyedMessage destroyMssg)
         {
-            AsteroidStageData nexStage = GetNextAsteroidStage(asteroidDestroyedMessage.Stage);
-
-            if (nexStage != null)
-                SpawnSplitAsteroids(asteroidDestroyedMessage.AsteroidPos, asteroidDestroyedMessage.RocketPos, nexStage);
+            if (destroyMssg.stageData != asteroidsStagesData.SmallStage)
+                StartCoroutine(SpawnSplitAsteroids(destroyMssg));
             else
                 AddCleanedAsteroid();
         }
@@ -106,24 +106,27 @@ namespace Asteroids.Systems
                 asteroidsCleanedCallback();
         }
 
-        private void SpawnSplitAsteroids(Vector3 asteroidPos, Vector3 rocketPos, AsteroidStageData asteroidStageData)
+        private IEnumerator SpawnSplitAsteroids(AsteroidDestroyedMessage destroyMssg)
         {
-            SpawnSplitAsteroid(asteroidStageData, asteroidPos, rocketPos, Vector3.up);
-            SpawnSplitAsteroid(asteroidStageData, asteroidPos, rocketPos, Vector3.down);
+            yield return new WaitForSeconds(DELAY_SPLIT_ASTEROID);
+
+            SpawnSplitAsteroid(destroyMssg, Vector3.up);
+            SpawnSplitAsteroid(destroyMssg, Vector3.down);
         }
 
-        private void SpawnSplitAsteroid(AsteroidStageData asteroidStageData, Vector3 prevAsteroidsPos, Vector3 rocketPos, Vector3 hitDirection)
+        private void SpawnSplitAsteroid(AsteroidDestroyedMessage destroyMssg, Vector3 hitDirection)
         {
-            float distance = Vector3.Distance(prevAsteroidsPos, rocketPos);
+            float distance = Vector3.Distance(destroyMssg.AsteroidPos, destroyMssg.RocketPos);
 
-            Vector3 direction = rocketPos - prevAsteroidsPos;
+            Vector3 direction = destroyMssg.RocketPos - destroyMssg.AsteroidPos;
             direction = Vector3.Cross(direction, hitDirection).normalized;
             direction *= distance;
 
-            Vector3 asteroidPos = prevAsteroidsPos + direction;
-            Vector3 asteroidDir = (asteroidPos - prevAsteroidsPos).normalized;
-   
-            SpawnAsteroid(asteroidStageData, asteroidPos, asteroidDir);
+            Vector3 asteroidPos = destroyMssg.AsteroidPos + direction;
+            Vector3 asteroidDir = (asteroidPos - destroyMssg.AsteroidPos).normalized;
+
+            AsteroidStageData stageData = GetNextAsteroidStage(destroyMssg.stageData);
+            SpawnAsteroid(stageData, asteroidPos, asteroidDir);
         }
 
         #endregion

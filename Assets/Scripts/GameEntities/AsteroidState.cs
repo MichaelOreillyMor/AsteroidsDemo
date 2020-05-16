@@ -49,27 +49,31 @@ namespace Asteroids.Entities
             base.Unsetup();
 
             audioSource.Stop();
-            asteroidStageData = null;
             SimplePool.Despawn(this);
         }
 
         protected override void ResolveEntitiesCollision(BaseGameEntity entity)
         {
-            if (entity is RocketState)
+            if (isAlive)
             {
-                Destroy(entity.transform.position);
-            }
-            else
-            {
-                audioSource.Play();
+                if (entity is RocketState)
+                {
+                    Destroy(entity.transform.position);
+                }
+                else
+                {
+                    audioSource.Play();
+                }
             }
         }
 
         private void Destroy(Vector3 rocketPos)
         {
-            PlayDestroyFXs();
-            Messenger<AsteroidDestroyedMessage>.Broadcast("OnAsteroidDestroyed", new AsteroidDestroyedMessage(asteroidStageData, transform.position, rocketPos));
+            PlayDestroyFXs(); 
             Unsetup();
+
+            AsteroidDestroyedMessage asteroidDestroyedMessage = new AsteroidDestroyedMessage(asteroidStageData, transform.position, rocketPos);
+            Messenger<AsteroidDestroyedMessage>.Broadcast("OnAsteroidDestroyed", asteroidDestroyedMessage);
         }
     }
 }

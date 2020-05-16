@@ -24,7 +24,6 @@ namespace Asteroids.Entities
 
         private bool isShotingMainGun;
         private bool isShotingSecondaryGun;
-        private bool isAlive;
 
         #endregion
 
@@ -72,7 +71,6 @@ namespace Asteroids.Entities
             audioSource.clip = spaceshipData.EngineSound;
             audioSource.Play();
 
-            isAlive = true;
             base.Setup();
         }
 
@@ -84,7 +82,6 @@ namespace Asteroids.Entities
             rigidbody.isKinematic = false;
 
             ActivateEntity(true);
-            isAlive = true;
         }
 
         public void InstantiateSpaceshipModel(GameObject spaceshipPref)
@@ -200,12 +197,13 @@ namespace Asteroids.Entities
         protected override void ResolveEntitiesCollision(BaseGameEntity entity)
         {
             if (entity is AsteroidState)
+            {
                 Destroy();
+            }
         }
 
         private void Destroy()
         {
-            isAlive = false;
             audioSource.Stop();
             PlayDestroyFXs();
             ActivateEntity(false);

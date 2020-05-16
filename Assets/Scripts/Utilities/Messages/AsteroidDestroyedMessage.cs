@@ -5,13 +5,13 @@ namespace Asteroids.Utilities.Messages
 {
     public struct AsteroidDestroyedMessage
     {
-        public AsteroidStageData Stage;
+        public AsteroidStageData stageData;
         public Vector3 AsteroidPos;
         public Vector3 RocketPos;
 
-        public AsteroidDestroyedMessage(AsteroidStageData stage, Vector3 asteroidPos, Vector3 rocketPos)
+        public AsteroidDestroyedMessage(AsteroidStageData stageData, Vector3 asteroidPos, Vector3 rocketPos)
         {
-            Stage = stage;
+            this.stageData = stageData;
             AsteroidPos = asteroidPos;
             RocketPos = rocketPos;
         }
