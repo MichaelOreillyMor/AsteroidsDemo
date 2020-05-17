@@ -11,25 +11,26 @@ namespace Asteroids.Entities
     /// The GunState is a special entity, it has been created to be the state of a data. 
     /// I would like to create another screen where the player can choose between different different weapons to attach.
     /// </summary>
-    public class GunState : MonoBehaviour
+    public class GunState
     {
         private static int shotsIDsCount;
 
         private GunData gunData;
+        private Transform gunTr;
 
         private float time;
         private float reloadTime;
         private float nextShotTime;
 
-        [SerializeField]
         private Quaternion[] rotationRockets;
-
         private int rocketsPerShot;
         private int shotArc;
 
-        public void Setup(GunData gunData)
+        public GunState(GunData gunData, Transform gunTr)
         {
             this.gunData = gunData;
+            this.gunTr = gunTr;
+
             reloadTime = gunData.ReloadTime;
             rocketsPerShot = gunData.RocketsPerShot;
             shotArc = gunData.ShotArc;
@@ -90,12 +91,12 @@ namespace Asteroids.Entities
 
         private void ShotRocket(Vector3 currentVel, Quaternion rotationRocket, int shotID)
         {
-            Quaternion relativeRotation = transform.rotation * rotationRocket;
-            RocketState rocket = (RocketState)SimplePool.Spawn(gunData.RocketPref, transform.position, relativeRotation);
+            Quaternion relativeRotation = gunTr.rotation * rotationRocket;
+            RocketState rocket = (RocketState)SimplePool.Spawn(gunData.RocketPref, gunTr.position, relativeRotation);
             rocket.Setup(gunData, currentVel, shotID);
         }
 
-        public void Unsetup()
+        public void ResetRockets()
         {
             List<PoolMember> rocketsActive = SimplePool.GetActiveInstances(gunData.RocketPref);
 

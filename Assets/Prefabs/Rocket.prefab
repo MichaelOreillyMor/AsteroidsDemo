@@ -142,8 +142,9 @@ MonoBehaviour:
   collider: {fileID: 1364312763}
   rigidbody: {fileID: 1364312764}
   model3D: {fileID: 4535608278734534910}
-  particlesSystemsPlayer: {fileID: 3781552892870564977, guid: d570665259185cf499c9c457f9c45bc6,
+  destroyFXPlayer: {fileID: 3781552892870564977, guid: d570665259185cf499c9c457f9c45bc6,
     type: 3}
+  fixPosOnLimits: 1
 --- !u!1 &9109720760041753513
 GameObject:
   m_ObjectHideFlags: 0

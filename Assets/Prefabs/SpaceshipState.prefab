@@ -9,9 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6695753955965560381}
-  - component: {fileID: 1031347985838613790}
   m_Layer: 10
-  m_Name: SecondaryGunState
+  m_Name: SecondaryGunTr
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -31,19 +30,6 @@ Transform:
   m_Father: {fileID: 7073002784647961146}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1031347985838613790
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2701994731154885066}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e1bd62f66dc9fa4409c177b35519f1c5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rotationRockets: []
 --- !u!1 &7073002784647961144
 GameObject:
   m_ObjectHideFlags: 0
@@ -96,10 +82,11 @@ MonoBehaviour:
   collider: {fileID: 7073002784647961147}
   rigidbody: {fileID: 7073002784647961148}
   model3D: {fileID: 0}
-  particlesSystemsPlayer: {fileID: 3781552892870564977, guid: 51e2fc45404a7b74e897eabf0f557547,
+  destroyFXPlayer: {fileID: 3781552892870564977, guid: 51e2fc45404a7b74e897eabf0f557547,
     type: 3}
-  mainGunState: {fileID: 7073002784893353939}
-  secondaryGunState: {fileID: 1031347985838613790}
+  fixPosOnLimits: 1
+  mainGunTr: {fileID: 7073002784893353940}
+  secondaryGunTr: {fileID: 6695753955965560381}
 --- !u!54 &7073002784647961148
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -234,9 +221,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7073002784893353940}
-  - component: {fileID: 7073002784893353939}
   m_Layer: 10
-  m_Name: MainGunState
+  m_Name: MainGunTr
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -256,16 +242,3 @@ Transform:
   m_Father: {fileID: 7073002784647961146}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7073002784893353939
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7073002784893353938}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e1bd62f66dc9fa4409c177b35519f1c5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rotationRockets: []

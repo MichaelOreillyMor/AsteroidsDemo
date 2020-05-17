@@ -25,7 +25,10 @@ namespace Asteroids.Entities
         protected GameObject model3D;
 
         [SerializeField]
-        protected ParticlesSystemsPlayer particlesSystemsPlayer;
+        protected ParticlesSystemsPlayer destroyFXPlayer;
+
+        [SerializeField]
+        private bool fixPosOnLimits;
 
         protected bool isAlive;
 
@@ -33,7 +36,7 @@ namespace Asteroids.Entities
 
         public virtual void Setup()
         {
-            if(screenLismitsHandler == null)
+            if(fixPosOnLimits && screenLismitsHandler == null)
                 screenLismitsHandler = new ScreenLismitsHandler();
 
             ActivateEntity(true);
@@ -60,9 +63,9 @@ namespace Asteroids.Entities
 
         protected void PlayDestroyFXs()
         {
-            if (particlesSystemsPlayer)
+            if (destroyFXPlayer)
             {
-                ParticlesSystemsPlayer particlesSystemsPlayerGO = (ParticlesSystemsPlayer)SimplePool.Spawn(particlesSystemsPlayer, rigidbody.position, Quaternion.identity);
+                ParticlesSystemsPlayer particlesSystemsPlayerGO = (ParticlesSystemsPlayer)SimplePool.Spawn(destroyFXPlayer, rigidbody.position, Quaternion.identity);
                 particlesSystemsPlayerGO.Play();
             }  
         }
@@ -98,7 +101,8 @@ namespace Asteroids.Entities
 
         protected virtual void FixedUpdate()
         {
-            screenLismitsHandler.FixLimitsPosition(transform);
+            if(fixPosOnLimits)
+                screenLismitsHandler.FixLimitsPosition(transform);
         }
     }
 }

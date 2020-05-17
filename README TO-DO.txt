@@ -1,5 +1,8 @@
 -----High priority tasks-----
 
+-create a child class for the shotgun. BasicGun, SpecialGun (listen to an event for reloading, max ammunition...), Shotgun
+- avoid trail particles glich, they dont change position in screen
+
 -Secondary gun it´s loaded +1 when you hit an asteroid with a rocket, max 3 ammunition.
 -Define a max velocity for all the asteroids independently of stage.
 

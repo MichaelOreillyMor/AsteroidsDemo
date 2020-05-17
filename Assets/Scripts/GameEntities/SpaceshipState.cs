@@ -17,9 +17,12 @@ namespace Asteroids.Entities
         #region Guns vars
 
         [SerializeField]
-        private GunState mainGunState;
+        private Transform mainGunTr;
 
         [SerializeField]
+        private Transform secondaryGunTr;
+
+        private GunState mainGunState;
         private GunState secondaryGunState;
 
         private bool isShotingMainGun;
@@ -61,8 +64,8 @@ namespace Asteroids.Entities
 
             InstantiateSpaceshipModel(spaceshipData.SpaceshipPref);
 
-            mainGunState.Setup(spaceshipData.MainGunData);
-            secondaryGunState.Setup(spaceshipData.SecondaryGunData);
+            mainGunState = new GunState(spaceshipData.MainGunData, mainGunTr);
+            secondaryGunState = new GunState(spaceshipData.SecondaryGunData, secondaryGunTr);
 
             thrusterVelocity = spaceshipData.ThrusterVelocity;
             thruster = model3D.GetComponentInChildren<ParticleSystem>();
@@ -95,8 +98,8 @@ namespace Asteroids.Entities
 
         public override void Unsetup()
         {
-            mainGunState.Unsetup();
-            secondaryGunState.Unsetup();
+            mainGunState.ResetRockets();
+            secondaryGunState.ResetRockets();
 
             base.Unsetup();
         }

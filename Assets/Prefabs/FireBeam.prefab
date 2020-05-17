@@ -175,9 +175,10 @@ MonoBehaviour:
   audioSource: {fileID: 5179743542069596886}
   collider: {fileID: 7882184679888107511}
   rigidbody: {fileID: 1364312764}
-  model3D: {fileID: 0}
-  particlesSystemsPlayer: {fileID: 3781552892870564977, guid: d570665259185cf499c9c457f9c45bc6,
+  model3D: {fileID: 3886008510584994223, guid: d570665259185cf499c9c457f9c45bc6, type: 3}
+  destroyFXPlayer: {fileID: 3781552892870564977, guid: d570665259185cf499c9c457f9c45bc6,
     type: 3}
+  fixPosOnLimits: 0
 --- !u!1001 &9218840938871732864
 PrefabInstance:
   m_ObjectHideFlags: 0
