@@ -22,8 +22,8 @@ namespace Asteroids.Entities
         [SerializeField]
         private Transform secondaryGunTr;
 
-        private GunState mainGunState;
-        private GunState secondaryGunState;
+        private BaseGunState mainGunState;
+        private BaseGunState secondaryGunState;
 
         private bool isShotingMainGun;
         private bool isShotingSecondaryGun;
@@ -64,8 +64,8 @@ namespace Asteroids.Entities
 
             InstantiateSpaceshipModel(spaceshipData.SpaceshipPref);
 
-            mainGunState = new GunState(spaceshipData.MainGunData, mainGunTr);
-            secondaryGunState = new GunState(spaceshipData.SecondaryGunData, secondaryGunTr);
+            mainGunState = new BaseGunState(spaceshipData.MainGunData, mainGunTr);
+            secondaryGunState = new BaseGunState(spaceshipData.SecondaryGunData, secondaryGunTr);
 
             thrusterVelocity = spaceshipData.ThrusterVelocity;
             thruster = model3D.GetComponentInChildren<ParticleSystem>();

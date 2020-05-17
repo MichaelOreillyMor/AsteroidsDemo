@@ -67,9 +67,7 @@ namespace Asteroids.Systems
 
             score = 0;
 
-            Messenger<AsteroidDestroyedMessage>.AddListener("OnAsteroidDestroyed", OnAsteroidDestroyed);
-            Messenger<bool>.AddListener("OnEndGame", OnGameEnded);
-            Messenger.AddListener("OnShot", OnShot);
+            StartListeningMensajes();
 
             inputHandler = new InputHandler();
             inputHandler.SetGameActionsCallbacks(this);
@@ -83,6 +81,16 @@ namespace Asteroids.Systems
             asteroidsLevelsController.Unsetup();
             spaceshipState.Unsetup();
 
+            StopListeningMensajes();
+        }
+        private void StartListeningMensajes()
+        {
+            Messenger<AsteroidDestroyedMessage>.AddListener("OnAsteroidDestroyed", OnAsteroidDestroyed);
+            Messenger<bool>.AddListener("OnEndGame", OnGameEnded);
+            Messenger.AddListener("OnShot", OnShot);
+        }
+        private void StopListeningMensajes()
+        {
             Messenger<AsteroidDestroyedMessage>.RemoveListener("OnAsteroidDestroyed", OnAsteroidDestroyed);
             Messenger<bool>.RemoveListener("OnEndGame", OnGameEnded);
             Messenger.RemoveListener("OnShot", OnShot);

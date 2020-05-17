@@ -1,10 +1,12 @@
 -----High priority tasks-----
 
+- Define basic gun
 -create a child class for the shotgun. BasicGun, SpecialGun (listen to an event for reloading, max ammunition...), Shotgun
-- avoid trail particles glich, they dont change position in screen
+- avoid trail particles glich with child class
+- Make explosion pref part of the data to preload them on factory
 
 -Secondary gun it´s loaded +1 when you hit an asteroid with a rocket, max 3 ammunition.
--Define a max velocity for all the asteroids independently of stage.
+-Define a max velocity for all the asteroids independently of their stage.
 
 -Create an AI that loads asteroids patterns instead of levels, this patterns will have a level of difficulty assigned.
  They will be spawned depending on: 

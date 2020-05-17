@@ -3,8 +3,8 @@ using UnityEngine;
 
 namespace Asteroids.Datas
 {
-    [CreateAssetMenu(fileName = "New GunData", menuName = "Data/GunData")]
-    public class GunData : ScriptableObject
+    [CreateAssetMenu(fileName = "New BaseGunData", menuName = "Data/GunDatas/BaseGunData")]
+    public class BaseGunData : ScriptableObject
     {
         public RocketState RocketPref;
         public int PreloadRocketPrefs;
@@ -15,11 +15,6 @@ namespace Asteroids.Datas
         public float RocketAcceleration;
         public float RocketMaxSpeed;
 
-        public int RocketsPerShot;
-
-        [Range(0, 360)]
-        public int ShotArc;
-
-        public float DelayDespawn;
+        public float DelayDespawnRockets;
     }
 }

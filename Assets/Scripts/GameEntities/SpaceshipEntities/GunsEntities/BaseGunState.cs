@@ -11,12 +11,12 @@ namespace Asteroids.Entities
     /// The GunState is a special entity, it has been created to be the state of a data. 
     /// I would like to create another screen where the player can choose between different different weapons to attach.
     /// </summary>
-    public class GunState
+    public class BaseGunState
     {
-        private static int shotsIDsCount;
-
-        private GunData gunData;
+        private BaseGunData gunData;
         private Transform gunTr;
+
+        private RocketState rocketPref;
 
         private float time;
         private float reloadTime;
@@ -26,17 +26,24 @@ namespace Asteroids.Entities
         private int rocketsPerShot;
         private int shotArc;
 
-        public GunState(GunData gunData, Transform gunTr)
+        private int shotsCount;
+        private string gunName;
+
+        public BaseGunState(BaseGunData gunData, Transform gunTr)
         {
             this.gunData = gunData;
             this.gunTr = gunTr;
+
+            rocketPref = gunData.RocketPref;
 
             reloadTime = gunData.ReloadTime;
             rocketsPerShot = gunData.RocketsPerShot;
             shotArc = gunData.ShotArc;
 
+            gunName = gunData.name;
+
             SetRotationRockets();
-            SimplePool.Preload(gunData.RocketPref, gunData.PreloadRocketPrefs);
+            SimplePool.Preload(rocketPref, gunData.PreloadRocketPrefs);
         }
 
         private void SetRotationRockets()
@@ -79,26 +86,26 @@ namespace Asteroids.Entities
         /// Generates an simple ID for all the shot´s rockets 
         /// </summary>
         /// <returns>shot ID</returns>
-        private int GenerateShotID() 
+        private string GenerateShotID() 
         {
-            if (shotsIDsCount == int.MaxValue)
-                shotsIDsCount = 0;
+            if (shotsCount == int.MaxValue)
+                shotsCount = 0;
 
-            shotsIDsCount++;
+            shotsCount++;
 
-            return shotsIDsCount;
+            return gunName + shotsCount;
         }
 
         private void ShotRocket(Vector3 currentVel, Quaternion rotationRocket, int shotID)
         {
             Quaternion relativeRotation = gunTr.rotation * rotationRocket;
-            RocketState rocket = (RocketState)SimplePool.Spawn(gunData.RocketPref, gunTr.position, relativeRotation);
+            RocketState rocket = (RocketState)SimplePool.Spawn(rocketPref, gunTr.position, relativeRotation);
             rocket.Setup(gunData, currentVel, shotID);
         }
 
         public void ResetRockets()
         {
-            List<PoolMember> rocketsActive = SimplePool.GetActiveInstances(gunData.RocketPref);
+            List<PoolMember> rocketsActive = SimplePool.GetActiveInstances(rocketPref);
 
             if (rocketsActive.Count > 0)
             {

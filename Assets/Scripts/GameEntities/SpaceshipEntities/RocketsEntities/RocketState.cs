@@ -19,7 +19,7 @@ namespace Asteroids.Entities
         private float lifeTime;
         private float delayDespawn;
 
-        public void Setup(GunData gunData, Vector3 currentVel, int shotID)
+        public void Setup(BaseGunData gunData, Vector3 currentVel, int shotID)
         {
             base.Setup();
             this.ShotID = shotID;

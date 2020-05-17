@@ -7,8 +7,8 @@ namespace Asteroids.Datas
     {
         public GameObject SpaceshipPref;
 
-        public GunData MainGunData;
-        public GunData SecondaryGunData;
+        public BaseGunData MainGunData;
+        public SpecialGunData SecondaryGunData;
 
         public float Speed;
         public float MaxVelocity;
