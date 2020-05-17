@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 405a4bd20f219ae46a13552e45fc4dc6, type: 3}
+  m_Name: RocketData
+  m_EditorClassIdentifier: 
+  FixPosOnLimits: 1
+  DestroyFXPlayerPref: {fileID: 3781552892870564977, guid: d570665259185cf499c9c457f9c45bc6,
+    type: 3}
+  RocketPref: {fileID: 5517428538837054779, guid: 4922995df2a7ad54ba8aefde0066bee3,
+    type: 3}
+  LifeTime: 1
+  Acceleration: 60
+  MaxSpeed: 45
+  DelayDespawn: 0

@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be90a740d896cb94a979c34463ba99c8, type: 3}
+  m_Name: Shotgun
+  m_EditorClassIdentifier: 
+  PreloadRocketPrefs: 6
+  ReloadTime: 1
+  RocketData: {fileID: 11400000, guid: 6078437b7e09d394aadd9c8a20b1d4b3, type: 2}
+  MaxAmmunition: 3
+  RocketsPerShot: 5
+  ShotArc: 30

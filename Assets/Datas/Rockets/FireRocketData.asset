@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 405a4bd20f219ae46a13552e45fc4dc6, type: 3}
+  m_Name: FireRocketData
+  m_EditorClassIdentifier: 
+  FixPosOnLimits: 0
+  DestroyFXPlayerPref: {fileID: 3781552892870564977, guid: d570665259185cf499c9c457f9c45bc6,
+    type: 3}
+  RocketPref: {fileID: 5517428538837054779, guid: 76f49af0a52109947b5f6879b5700005,
+    type: 3}
+  LifeTime: 0.53
+  Acceleration: 90
+  MaxSpeed: 150
+  DelayDespawn: 1.5

@@ -6,7 +6,7 @@ namespace Asteroids.Datas
     /// This is an "Enum" element with additional info
     /// </summary>
     [CreateAssetMenu(fileName = "New AsteroidStageData", menuName = "Data/AsteroidStageData")]
-    public class AsteroidStageData : ScriptableObject
+    public class AsteroidStageData : BaseEntityData
     {
         public float InitSpeed;
         public float InitMaxRot;

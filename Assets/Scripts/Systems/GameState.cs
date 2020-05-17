@@ -87,27 +87,21 @@ namespace Asteroids.Systems
         {
             Messenger<AsteroidDestroyedMessage>.AddListener("OnAsteroidDestroyed", OnAsteroidDestroyed);
             Messenger<bool>.AddListener("OnEndGame", OnGameEnded);
-            Messenger.AddListener("OnShot", OnShot);
         }
+
         private void StopListeningMensajes()
         {
             Messenger<AsteroidDestroyedMessage>.RemoveListener("OnAsteroidDestroyed", OnAsteroidDestroyed);
             Messenger<bool>.RemoveListener("OnEndGame", OnGameEnded);
-            Messenger.RemoveListener("OnShot", OnShot);
         }
 
         #endregion
 
         #region Callback events
 
-        private void OnShot()
-        {
-            cameraShake.Shake(0.2f, 0.3f, 100f);
-        }
-
         private void OnAsteroidDestroyed(AsteroidDestroyedMessage asteroidDestroyedMessage)
         {
-            cameraShake.Shake(1f, 0.8f, 40f);
+            cameraShake.Shake(1f, 1f, 40f);
             score += SCORE_PER_ASTEROID;
 
             Messenger<int>.Broadcast("OnScoreChange", score);

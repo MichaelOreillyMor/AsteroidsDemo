@@ -3,12 +3,12 @@
 namespace Asteroids.Datas
 {
     [CreateAssetMenu(fileName = "New SpaceshipData", menuName = "Data/SpaceshipData")]
-    public class SpaceshipData : ScriptableObject
+    public class SpaceshipData : BaseEntityData
     {
         public GameObject SpaceshipPref;
 
-        public BaseGunData MainGunData;
-        public SpecialGunData SecondaryGunData;
+        public BaseGunData BaseGunData;
+        public SpecialGunData SpecialGunData;
 
         public float Speed;
         public float MaxVelocity;

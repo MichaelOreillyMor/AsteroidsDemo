@@ -36,6 +36,8 @@ namespace Asteroids.Systems
             cameraMain = Camera.main;
 
             SimplePool.Preload(asteroidPref, preloadAsteroidPrefs);
+            SimplePool.Preload(asteroidsStagesData.BigStage.DestroyFXPlayerPref, preloadAsteroidPrefs);
+
             Messenger<AsteroidDestroyedMessage>.AddListener("OnAsteroidDestroyed", ProcessAsteroidDestroyed);
         }
 
@@ -62,13 +64,13 @@ namespace Asteroids.Systems
             Vector3 position = cameraMain.ViewportToWorldPoint(asteroidSpawnInfo.ViewportPosition);
             position.y = 0;
 
-            SpawnAsteroid(asteroidsStagesData.BigStage, position, asteroidSpawnInfo.Direction, -1);
+            SpawnAsteroid(asteroidsStagesData.BigStage, position, asteroidSpawnInfo.Direction, "");
         }
 
-        private void SpawnAsteroid(AsteroidStageData stage, Vector3 position, Vector3 dir, int shotCreatedAsteroidID)
+        private void SpawnAsteroid(AsteroidStageData stage, Vector3 position, Vector3 dir, string shotCreatorAsteroidID)
         {
             AsteroidState asteroid = (AsteroidState)SimplePool.Spawn(asteroidPref, position, Quaternion.identity);
-            asteroid.Setup(stage, dir, shotCreatedAsteroidID);
+            asteroid.Setup(stage, dir, shotCreatorAsteroidID);
         }
 
         public void ResetAsteroids()
