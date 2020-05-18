@@ -1,7 +1,5 @@
 -----High priority tasks-----
 
--Reset special rockets on reset
--Define a max velocity for all the asteroids independently of their stage.
 -If you destroy an Asteroid very close to the spaceship (gun tr) +2 special shots
 -Animation OnShot and other animations for spaceship
 

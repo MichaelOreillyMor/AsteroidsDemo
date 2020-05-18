@@ -44,6 +44,11 @@ namespace Asteroids.Entities
             ResetRockets();
         }
 
+        public virtual void ResetState()
+        {
+            ResetRockets();
+        }
+
         private void ResetRockets()
         {
             List<PoolMember> rocketsActive = SimplePool.GetActiveInstances(rocketPref);

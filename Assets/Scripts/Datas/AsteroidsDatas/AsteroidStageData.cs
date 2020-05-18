@@ -9,6 +9,8 @@ namespace Asteroids.Datas
     public class AsteroidStageData : BaseEntityData
     {
         public float InitSpeed;
+        public float MaxSpeed;
+
         public float InitMaxRot;
 
         public float Scale;

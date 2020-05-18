@@ -25,6 +25,11 @@ namespace Asteroids.Entities
             base.Unsetup();
             StopListeningAddAmmunitionEvent();
         }
+        public override void ResetState()
+        {
+            currentAmmunition = 0;
+            base.ResetState();
+        }
 
         #endregion
 

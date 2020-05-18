@@ -85,6 +85,9 @@ namespace Asteroids.Entities
             transform.rotation = Quaternion.identity;
             rigidbody.isKinematic = false;
 
+            mainGunState.ResetState();
+            secondaryGunState.ResetState();
+
             ActivateEntity(true);
         }
 
@@ -107,7 +110,7 @@ namespace Asteroids.Entities
 
         #endregion
 
-        #region Actions
+        #region Actions methods
 
         protected override void FixedUpdate()
         {
@@ -196,7 +199,7 @@ namespace Asteroids.Entities
 
         #endregion
 
-        #region Collision
+        #region Collisions methods
 
         protected override void ResolveEntitiesCollision(BaseEntityState entity)
         {

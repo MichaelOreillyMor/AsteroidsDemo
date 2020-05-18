@@ -19,10 +19,12 @@ namespace Asteroids.Entities
         private float lifeTime;
         private float delayDespawn;
 
+        #region Setup/Unsetup methods
+
         public void Setup(RocketData rocketData, Vector3 currentVel, string shotID)
         {
             base.Setup(rocketData);
-            this.ShotID = shotID;
+            ShotID = shotID;
 
             acceleration = rocketData.Acceleration;
             maxSpeed = rocketData.MaxSpeed;
@@ -44,16 +46,26 @@ namespace Asteroids.Entities
             SimplePool.Despawn(this);
         }
 
+        #endregion
+
+        #region Physics methods
+
         protected override void FixedUpdate()
         {
             base.FixedUpdate();
             rigidbody.AddRelativeForce(Vector3.forward * acceleration);
-            rigidbody.velocity = Vector3.ClampMagnitude(rigidbody.velocity, maxSpeed);
+
+            if(rigidbody.velocity.magnitude > maxSpeed)
+                rigidbody.velocity = Vector3.ClampMagnitude(rigidbody.velocity, maxSpeed);
         }
+
+        #endregion
+
+        #region Delay methods
 
         private IEnumerator DestroyDelay(float delay)
         {
-            if(delay > 0)
+            if (delay > 0)
                 yield return new WaitForSeconds(delay);
 
             ActivateEntity(false);
@@ -63,6 +75,10 @@ namespace Asteroids.Entities
 
             Unsetup();
         }
+
+        #endregion
+
+        #region Collisions methods
 
         protected override void ResolveEntitiesCollision(BaseEntityState entity)
         {
@@ -75,5 +91,7 @@ namespace Asteroids.Entities
             StopAllCoroutines();
             StartCoroutine(DestroyDelay(0f));
         }
+
+        #endregion
     }
 }

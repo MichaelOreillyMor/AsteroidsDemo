@@ -16,6 +16,7 @@ MonoBehaviour:
   DestroyFXPlayerPref: {fileID: -323653402742492623, guid: 382bf2a6c53ed2a45b18d6a2d207fdb6,
     type: 3}
   InitSpeed: 800
+  MaxSpeed: 25
   InitMaxRot: 6
   Scale: 0.8
   Mass: 6

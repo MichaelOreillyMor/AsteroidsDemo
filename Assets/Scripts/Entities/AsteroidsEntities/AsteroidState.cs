@@ -14,9 +14,13 @@ namespace Asteroids.Entities
         private AsteroidStageData asteroidStageData;
 
         private float initSpeed;
+        private float maxSpeed;
+
         private float initMaxRot;
 
         private string shotCreatedAsteroidID;
+
+        #region Setup/Unsetup methods
 
         public void Setup(AsteroidStageData asteroidStageData, Vector3 direction, string shotCreatedAsteroidID)
         {
@@ -26,11 +30,25 @@ namespace Asteroids.Entities
             this.shotCreatedAsteroidID = shotCreatedAsteroidID;
 
             initSpeed = asteroidStageData.InitSpeed;
+            maxSpeed = asteroidStageData.MaxSpeed;
+
             initMaxRot = asteroidStageData.InitMaxRot;
 
             SetPhysicalProperties(asteroidStageData);
             SetRandInitForces(direction);
         }
+
+        public override void Unsetup()
+        {
+            base.Unsetup();
+
+            audioSource.Stop();
+            SimplePool.Despawn(this);
+        }
+
+        #endregion
+
+        #region Physics methods
 
         private void SetPhysicalProperties(AsteroidStageData asteroidStageData)
         {
@@ -47,13 +65,17 @@ namespace Asteroids.Entities
             rigidbody.AddTorque(randRot, ForceMode.Impulse);
         }
 
-        public override void Unsetup()
+        protected override void FixedUpdate()
         {
-            base.Unsetup();
+            base.FixedUpdate();
 
-            audioSource.Stop();
-            SimplePool.Despawn(this);
+            if (rigidbody.velocity.magnitude > maxSpeed)
+                rigidbody.velocity = Vector3.ClampMagnitude(rigidbody.velocity, maxSpeed);
         }
+
+        #endregion 
+
+        #region Collisions methods
 
         protected override void ResolveEntitiesCollision(BaseEntityState entity)
         {
@@ -81,5 +103,7 @@ namespace Asteroids.Entities
             AsteroidDestroyedMessage asteroidDestroyedMessage = new AsteroidDestroyedMessage(asteroidStageData, transform.position, rocketPos, shotID);
             Messenger<AsteroidDestroyedMessage>.Broadcast("OnAsteroidDestroyed", asteroidDestroyedMessage);
         }
+
+        #endregion
     }
 }
