@@ -54,7 +54,7 @@ namespace Asteroids.Entities
 
         #endregion
 
-        #region Movement vars
+        #region Animator vars
 
         private const string MAIN_SHOT_ANIM = "OnMainShot";
         private const string SECONDARY_SHOT_ANIM = "OnSecondaryShot";
