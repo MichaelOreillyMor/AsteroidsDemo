@@ -110,7 +110,7 @@ namespace Asteroids.Systems
         private void OnGameEnded(bool playerWins)
         {
             if(!playerWins)
-                cameraShake.Shake(1f, 2f, 70f);
+                cameraShake.Shake(1f, 3f, 70f);
 
             StartCoroutine(DelayResetGame(playerWins));
         }

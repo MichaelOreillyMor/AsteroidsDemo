@@ -8,19 +8,21 @@ namespace Asteroids.Effects
     {
         private const float MIN_SPEED = 1f;
         private const float DIST_EQUAL = 0.01f;
+        private const float RETURN_ORIGIN_DURATION = 0.25f;
 
         private bool isRunning;
-
-        private float duration;
-        private float magnitude;
-        private float speed;
-
-        private float initMagnitude;
-        private float initSpeed;
-        private float decreaseFactor;
         private bool isDesirePos;
 
+        private float duration;
         private float elapse;
+
+        private float magnitude;
+        private float initMagnitude;
+
+        private float speed;
+        private float initSpeed;
+
+        private float decreaseFactor;
 
         private Vector3 originalPos;
         private Vector3 desirePos;
@@ -33,11 +35,12 @@ namespace Asteroids.Effects
         public void Shake(float duration, float magnitude, float speed)
         {
             this.duration += duration;
-            this.magnitude += magnitude;
-            this.speed = (speed > this.speed) ? speed : this.speed;
 
-            initMagnitude = magnitude;
-            initSpeed = speed;
+            if (speed > initSpeed)
+                initSpeed = speed;
+
+            if (magnitude > initMagnitude)
+                initMagnitude = magnitude;
 
             if (!isRunning)
                 StartCoroutine(Shake());
@@ -49,15 +52,15 @@ namespace Asteroids.Effects
             isDesirePos = false;
             desirePos = originalPos;
 
-            while (elapse < duration || !isDesirePos)
+            while (elapse < duration)
             {
-                if (elapse < duration && isDesirePos)
+                if (isDesirePos)
                     desirePos = originalPos + GetRandShake();
+
+                SetShakeValues(); 
 
                 transform.position = Vector3.Lerp(transform.position, desirePos, Time.deltaTime * speed);
                 isDesirePos = Vector3.SqrMagnitude(desirePos - transform.position) < DIST_EQUAL;
-
-                DecreaseShake();
 
                 elapse += Time.deltaTime;
                 yield return null;
@@ -65,14 +68,14 @@ namespace Asteroids.Effects
 
             elapse = 0;
             duration = 0;
-            magnitude = 0;
-            speed = 0;
+            initMagnitude = 0;
+            initSpeed = 0;
 
-            transform.position = originalPos;
+            yield return StartCoroutine(ReturnToOriginPos());
             isRunning = false;
         }
 
-        private void DecreaseShake()
+        private void SetShakeValues()
         {
             decreaseFactor = 1 - (elapse / duration);
             magnitude = initMagnitude * decreaseFactor;
@@ -89,6 +92,22 @@ namespace Asteroids.Effects
             randAmountShake.z = Random.Range(-1, 1) * magnitude;
 
             return randAmountShake;
+        }
+
+        private IEnumerator ReturnToOriginPos()
+        {
+            Vector3 startPos = transform.position;
+
+            float step = 0f;
+            float time = 0f;
+
+            while (step < RETURN_ORIGIN_DURATION)
+            {
+                time += Time.deltaTime;
+                step = time / RETURN_ORIGIN_DURATION;
+                transform.position = Vector3.Lerp(startPos, originalPos, step);
+                yield return null;
+            }
         }
     }
 }
