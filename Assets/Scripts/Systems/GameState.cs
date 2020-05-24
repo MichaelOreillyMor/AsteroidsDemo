@@ -19,6 +19,11 @@ namespace Asteroids.Systems
         private const int SCORE_PER_ASTEROID = 50;
         private const int TIME_TO_RESET_GAME = 2;
 
+#if UNITY_EDITOR
+        [SerializeField]
+        private bool mute;
+#endif
+
         [SerializeField]
         private SpaceshipData spaceshipData;
 
@@ -46,16 +51,13 @@ namespace Asteroids.Systems
 
         void Start()
         {
-            //Small hack to don´t play music all the time
 #if UNITY_EDITOR
-            AudioListener.volume = 0;
-#else
-            AudioListener.volume = 1;
+            AudioListener.volume = (mute) ? 0 : 1;
 #endif
             Setup();
         }
 
-        #region Setup/Unsetup methods
+#region Setup/Unsetup methods
 
         public void Setup()
         {
@@ -95,9 +97,9 @@ namespace Asteroids.Systems
             Messenger<bool>.RemoveListener("OnEndGame", OnGameEnded);
         }
 
-        #endregion
+#endregion
 
-        #region Callback events
+#region Callback events
 
         private void OnAsteroidDestroyed(AsteroidDestroyedMessage asteroidDestroyedMessage)
         {
@@ -115,7 +117,7 @@ namespace Asteroids.Systems
             StartCoroutine(DelayResetGame(playerWins));
         }
 
-        #endregion
+#endregion
 
         private IEnumerator DelayResetGame(bool winState)
         {

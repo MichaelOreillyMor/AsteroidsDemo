@@ -3676,6 +3676,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5301a787dd7ca404a8f04fe503bcf075, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mute: 1
   spaceshipData: {fileID: 11400000, guid: ef046c27f1c817e40a0edd0a045e0855, type: 2}
   AsteroidsLevelsData: {fileID: 11400000, guid: 1e9b0777b6fef814eb721ea742ea9985,
     type: 2}
