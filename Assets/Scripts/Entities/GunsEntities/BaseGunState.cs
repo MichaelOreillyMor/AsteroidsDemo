@@ -67,7 +67,7 @@ namespace Asteroids.Entities
 
         #region Shot methods
 
-        public virtual void Shot(Vector3 currentVel)
+        public virtual bool Shot(Vector3 currentVel)
         {
             time = Time.time;
 
@@ -78,7 +78,10 @@ namespace Asteroids.Entities
                 nextShotTime = time + reloadTime;
 
                 ShotRocket(currentVel, Quaternion.identity, shotID);
+                return true;
             }
+
+            return false;
         }
 
         /// <summary>

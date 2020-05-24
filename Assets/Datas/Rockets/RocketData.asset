@@ -17,7 +17,7 @@ MonoBehaviour:
     type: 3}
   RocketPref: {fileID: 5517428538837054779, guid: 4922995df2a7ad54ba8aefde0066bee3,
     type: 3}
-  LifeTime: 1
-  Acceleration: 60
-  MaxSpeed: 45
+  LifeTime: 0.9
+  Acceleration: 80
+  MaxSpeed: 60
   DelayDespawn: 0

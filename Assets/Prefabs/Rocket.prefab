@@ -142,9 +142,6 @@ MonoBehaviour:
   collider: {fileID: 1364312763}
   rigidbody: {fileID: 1364312764}
   model3D: {fileID: 4535608278734534910}
-  destroyFXPlayer: {fileID: 3781552892870564977, guid: d570665259185cf499c9c457f9c45bc6,
-    type: 3}
-  fixPosOnLimits: 1
 --- !u!1 &9109720760041753513
 GameObject:
   m_ObjectHideFlags: 0
@@ -157,7 +154,7 @@ GameObject:
   - component: {fileID: 6005531375162351671}
   - component: {fileID: 2069939303079232795}
   m_Layer: 9
-  m_Name: Particle System
+  m_Name: Fire
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

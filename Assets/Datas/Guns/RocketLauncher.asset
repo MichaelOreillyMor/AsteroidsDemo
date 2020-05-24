@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: RocketLauncher
   m_EditorClassIdentifier: 
   PreloadRocketPrefs: 3
-  ReloadTime: 0.5
+  ReloadTime: 0.45
   RocketData: {fileID: 11400000, guid: d405ecf551620144cb01940302b49621, type: 2}

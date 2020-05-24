@@ -39,7 +39,7 @@ namespace Asteroids.Entities
 
         #region Shot methods
 
-        public override void Shot(Vector3 currentVel)
+        public override bool Shot(Vector3 currentVel)
         {
             time = Time.time;
 
@@ -54,7 +54,11 @@ namespace Asteroids.Entities
                 {
                     ShotRocket(currentVel, rotationRocket, shotID);
                 }
+
+                return true;
             }
+
+            return false;
         }
 
         #endregion

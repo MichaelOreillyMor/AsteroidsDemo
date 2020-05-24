@@ -21,6 +21,6 @@ MonoBehaviour:
   SpecialGunData: {fileID: 11400000, guid: ea656375ccb48c8418fed7b4a80a5aa5, type: 2}
   Speed: 25
   MaxVelocity: 13
-  RotationSpeed: 6
+  RotationSpeed: 7
   ThrusterVelocity: 0.6
   EngineSound: {fileID: 8300000, guid: aac5167bb363326419e5ecafe02e063f, type: 3}

@@ -1,7 +1,6 @@
 -----High priority tasks-----
 
--If you destroy an Asteroid very close to the spaceship (gun tr) +2 special shots
--Animation OnShot and other animations for spaceship
+-Animations movement
 
 -Create an AI that loads asteroids patterns instead of levels, this patterns will have a level of difficulty assigned.
  They will be spawned depending on: 

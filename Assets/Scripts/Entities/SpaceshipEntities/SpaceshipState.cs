@@ -54,6 +54,15 @@ namespace Asteroids.Entities
 
         #endregion
 
+        #region Movement vars
+
+        private const string MAIN_SHOT_ANIM = "OnMainShot";
+        private const string SECONDARY_SHOT_ANIM = "OnSecondaryShot";
+
+        private Animator animator;
+
+        #endregion
+
         #region Setup/Unsetup methods
 
         public void Setup(SpaceshipData spaceshipData)
@@ -94,10 +103,13 @@ namespace Asteroids.Entities
         public void InstantiateSpaceshipModel(GameObject spaceshipPref)
         {
             model3D = Instantiate(spaceshipPref);
+
             Transform modelTr = model3D.transform;
             modelTr.SetParent(transform);
             modelTr.localPosition = Vector3.zero;
             modelTr.localRotation = Quaternion.identity;
+
+            animator = modelTr.GetComponent<Animator>();
         }
 
         public override void Unsetup()
@@ -158,11 +170,17 @@ namespace Asteroids.Entities
 
         public void MainShot()
         {
-            mainGunState.Shot(rigidbody.velocity);
+            bool canShot = mainGunState.Shot(rigidbody.velocity);
+
+            if(canShot)
+                animator.SetTrigger(MAIN_SHOT_ANIM);
         }
         public void SecondaryShot()
         {
-            secondaryGunState.Shot(rigidbody.velocity);
+            bool canShot = secondaryGunState.Shot(rigidbody.velocity);
+
+            if (canShot)
+                animator.SetTrigger(SECONDARY_SHOT_ANIM);
         }
 
         public void Rotate()
