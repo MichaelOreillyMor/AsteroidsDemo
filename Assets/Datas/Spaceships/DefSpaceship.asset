@@ -15,12 +15,11 @@ MonoBehaviour:
   FixPosOnLimits: 1
   DestroyFXPlayerPref: {fileID: 3781552892870564977, guid: 51e2fc45404a7b74e897eabf0f557547,
     type: 3}
-  SpaceshipPref: {fileID: 5551175190355302685, guid: de54998bea7dc0643beff362425226ff,
+  SpaceshipPref: {fileID: 7073002784647961145, guid: 6aa2ce5ae0f6041419c588117cd2d018,
+    type: 3}
+  SpaceshipModel: {fileID: 5551175190355302685, guid: de54998bea7dc0643beff362425226ff,
     type: 3}
   BaseGunData: {fileID: 11400000, guid: 4b45f458e5fc206468b00eced2d9d00e, type: 2}
   SpecialGunData: {fileID: 11400000, guid: ea656375ccb48c8418fed7b4a80a5aa5, type: 2}
-  Speed: 25
-  MaxVelocity: 13
-  RotationSpeed: 7
-  ThrusterVelocity: 0.6
+  ThrusterData: {fileID: 11400000, guid: 23fd578a8fe498c4c8c6e02eac35072a, type: 2}
   EngineSound: {fileID: 8300000, guid: aac5167bb363326419e5ecafe02e063f, type: 3}

@@ -29,7 +29,7 @@ namespace Asteroids.Input
                     ""interactions"": """"
                 },
                 {
-                    ""name"": ""SecondaryShot"",
+                    ""name"": ""SpecialShot"",
                     ""type"": ""PassThrough"",
                     ""id"": ""cc59fadf-4cb8-45f0-a2a4-3a3715ede974"",
                     ""expectedControlType"": """",
@@ -171,7 +171,7 @@ namespace Asteroids.Input
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""SecondaryShot"",
+                    ""action"": ""SpecialShot"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -210,7 +210,7 @@ namespace Asteroids.Input
             // Spaceship
             m_Spaceship = asset.FindActionMap("Spaceship", throwIfNotFound: true);
             m_Spaceship_MainShot = m_Spaceship.FindAction("MainShot", throwIfNotFound: true);
-            m_Spaceship_SecondaryShot = m_Spaceship.FindAction("SecondaryShot", throwIfNotFound: true);
+            m_Spaceship_SpecialShot = m_Spaceship.FindAction("SpecialShot", throwIfNotFound: true);
             m_Spaceship_MoveForward = m_Spaceship.FindAction("MoveForward", throwIfNotFound: true);
             m_Spaceship_Rotate = m_Spaceship.FindAction("Rotate", throwIfNotFound: true);
             // Game
@@ -266,7 +266,7 @@ namespace Asteroids.Input
         private readonly InputActionMap m_Spaceship;
         private ISpaceshipActions m_SpaceshipActionsCallbackInterface;
         private readonly InputAction m_Spaceship_MainShot;
-        private readonly InputAction m_Spaceship_SecondaryShot;
+        private readonly InputAction m_Spaceship_SpecialShot;
         private readonly InputAction m_Spaceship_MoveForward;
         private readonly InputAction m_Spaceship_Rotate;
         public struct SpaceshipActions
@@ -274,7 +274,7 @@ namespace Asteroids.Input
             private @GameControls m_Wrapper;
             public SpaceshipActions(@GameControls wrapper) { m_Wrapper = wrapper; }
             public InputAction @MainShot => m_Wrapper.m_Spaceship_MainShot;
-            public InputAction @SecondaryShot => m_Wrapper.m_Spaceship_SecondaryShot;
+            public InputAction @SpecialShot => m_Wrapper.m_Spaceship_SpecialShot;
             public InputAction @MoveForward => m_Wrapper.m_Spaceship_MoveForward;
             public InputAction @Rotate => m_Wrapper.m_Spaceship_Rotate;
             public InputActionMap Get() { return m_Wrapper.m_Spaceship; }
@@ -289,9 +289,9 @@ namespace Asteroids.Input
                     @MainShot.started -= m_Wrapper.m_SpaceshipActionsCallbackInterface.OnMainShot;
                     @MainShot.performed -= m_Wrapper.m_SpaceshipActionsCallbackInterface.OnMainShot;
                     @MainShot.canceled -= m_Wrapper.m_SpaceshipActionsCallbackInterface.OnMainShot;
-                    @SecondaryShot.started -= m_Wrapper.m_SpaceshipActionsCallbackInterface.OnSecondaryShot;
-                    @SecondaryShot.performed -= m_Wrapper.m_SpaceshipActionsCallbackInterface.OnSecondaryShot;
-                    @SecondaryShot.canceled -= m_Wrapper.m_SpaceshipActionsCallbackInterface.OnSecondaryShot;
+                    @SpecialShot.started -= m_Wrapper.m_SpaceshipActionsCallbackInterface.OnSpecialShot;
+                    @SpecialShot.performed -= m_Wrapper.m_SpaceshipActionsCallbackInterface.OnSpecialShot;
+                    @SpecialShot.canceled -= m_Wrapper.m_SpaceshipActionsCallbackInterface.OnSpecialShot;
                     @MoveForward.started -= m_Wrapper.m_SpaceshipActionsCallbackInterface.OnMoveForward;
                     @MoveForward.performed -= m_Wrapper.m_SpaceshipActionsCallbackInterface.OnMoveForward;
                     @MoveForward.canceled -= m_Wrapper.m_SpaceshipActionsCallbackInterface.OnMoveForward;
@@ -305,9 +305,9 @@ namespace Asteroids.Input
                     @MainShot.started += instance.OnMainShot;
                     @MainShot.performed += instance.OnMainShot;
                     @MainShot.canceled += instance.OnMainShot;
-                    @SecondaryShot.started += instance.OnSecondaryShot;
-                    @SecondaryShot.performed += instance.OnSecondaryShot;
-                    @SecondaryShot.canceled += instance.OnSecondaryShot;
+                    @SpecialShot.started += instance.OnSpecialShot;
+                    @SpecialShot.performed += instance.OnSpecialShot;
+                    @SpecialShot.canceled += instance.OnSpecialShot;
                     @MoveForward.started += instance.OnMoveForward;
                     @MoveForward.performed += instance.OnMoveForward;
                     @MoveForward.canceled += instance.OnMoveForward;
@@ -354,7 +354,7 @@ namespace Asteroids.Input
         public interface ISpaceshipActions
         {
             void OnMainShot(InputAction.CallbackContext context);
-            void OnSecondaryShot(InputAction.CallbackContext context);
+            void OnSpecialShot(InputAction.CallbackContext context);
             void OnMoveForward(InputAction.CallbackContext context);
             void OnRotate(InputAction.CallbackContext context);
         }

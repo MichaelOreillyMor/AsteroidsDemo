@@ -1,8 +1,5 @@
-﻿using Asteroids.Entities;
-using Asteroids.Datas;
+﻿using Asteroids.Datas;
 
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Asteroids.Entities
@@ -30,7 +27,6 @@ namespace Asteroids.Entities
                 gunState = new BaseGunState(baseGunData, gunTr);
             }
 
-            //pre load explosions?
             return gunState;
         }
     }

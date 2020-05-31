@@ -1,20 +1,19 @@
-﻿using UnityEngine;
+﻿using Asteroids.Entities;
+using UnityEngine;
 
 namespace Asteroids.Datas
 {
     [CreateAssetMenu(fileName = "New SpaceshipData", menuName = "Data/SpaceshipData")]
     public class SpaceshipData : BaseEntityData
     {
-        public GameObject SpaceshipPref;
+        public SpaceshipState SpaceshipPref;
+        public GameObject SpaceshipModel;
 
         public BaseGunData BaseGunData;
         public SpecialGunData SpecialGunData;
 
-        public float Speed;
-        public float MaxVelocity;
-        public float RotationSpeed;
+        public ThrusterData ThrusterData;
 
-        public float ThrusterVelocity;
         public AudioClip EngineSound;
     }
 }

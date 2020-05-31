@@ -22,6 +22,12 @@ namespace Asteroids.Entities
 
         #region Setup/Unsetup methods
 
+        /// <summary>
+        /// Initialize an asteroid state
+        /// </summary>
+        /// <param name="asteroidStageData">Stage data of the asteroid (big, medium, small)</param>
+        /// <param name="direction">Direction of the asteroid</param>
+        /// <param name="shotCreatedAsteroidID">ID Shot that split the previous asteroid and created this piece</param>
         public void Setup(AsteroidStageData asteroidStageData, Vector3 direction, string shotCreatedAsteroidID)
         {
             base.Setup(asteroidStageData);
@@ -37,16 +43,6 @@ namespace Asteroids.Entities
             SetPhysicalProperties(asteroidStageData);
             SetRandInitForces(direction);
         }
-
-        public override void Unsetup()
-        {
-            base.Unsetup();
-
-            audioSource.Stop();
-            SimplePool.Despawn(this);
-        }
-
-        #endregion
 
         #region Physics methods
 
@@ -65,6 +61,12 @@ namespace Asteroids.Entities
             rigidbody.AddTorque(randRot, ForceMode.Impulse);
         }
 
+        #endregion
+
+        #endregion
+
+        #region Update methods
+
         protected override void FixedUpdate()
         {
             base.FixedUpdate();
@@ -73,7 +75,7 @@ namespace Asteroids.Entities
                 rigidbody.velocity = Vector3.ClampMagnitude(rigidbody.velocity, maxSpeed);
         }
 
-        #endregion 
+        #endregion
 
         #region Collisions methods
 

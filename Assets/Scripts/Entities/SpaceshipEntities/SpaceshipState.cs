@@ -1,10 +1,10 @@
 ﻿using Asteroids.Datas;
+using Asteroids.Entities.ShipModules;
 using Asteroids.Input;
 using Asteroids.Utilities.Messages;
 using Asteroids.Utilities.Pools;
 
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 namespace Asteroids.Entities
 {
@@ -12,7 +12,7 @@ namespace Asteroids.Entities
     /// I would like to create another screen where the player can choose 
     /// between different spaceship models and different weapons to attach.
     /// </summary>
-    public class SpaceshipState : BaseEntityState, GameControls.ISpaceshipActions
+    public class SpaceshipState : BaseEntityState
     {
         #region Guns vars
 
@@ -20,65 +20,30 @@ namespace Asteroids.Entities
         private Transform mainGunTr;
 
         [SerializeField]
-        private Transform secondaryGunTr;
-
-        private BaseGunState mainGunState;
-        private BaseGunState secondaryGunState;
-
-        private bool isShotingMainGun;
-        private bool isShotingSecondaryGun;
+        private Transform specialGunTr;
 
         #endregion
 
-        #region Movement vars
+        #region Modules vars
 
-        private float speed;
-        private float maxVelocity;
-        private float rotationSpeed;
-        private float rotationDir;
-
-        #endregion
-
-        #region Input vars
-
-        private bool isMovingForward;
-        private bool wasMovingForwardLastFrame;
+        private SpaceshipInputModule spaceshipInputModule;
+        private SpaceshipThrusterModule spaceshipThrusterModule;
+        private SpaceshipGunsModule spaceshipGunsModule;
 
         #endregion
 
-        #region Thruster vars
-
-        private ParticleSystem thruster;
-        private ParticleSystem.VelocityOverLifetimeModule thrusterVelMod;
-        private float thrusterVelocity;
-
-        #endregion
-
-        #region Animator vars
-
-        private const string MAIN_SHOT_ANIM = "OnMainShot";
-        private const string SECONDARY_SHOT_ANIM = "OnSecondaryShot";
-
-        private Animator animator;
-
-        #endregion
 
         #region Setup/Unsetup methods
 
-        public void Setup(SpaceshipData spaceshipData)
-        {           
-            speed = spaceshipData.Speed;
-            maxVelocity = spaceshipData.MaxVelocity;
-            rotationSpeed = spaceshipData.RotationSpeed;
+        public void Setup(SpaceshipData spaceshipData, InputHandler inputHandler)
+        {
+            InstantiateModel(spaceshipData.SpaceshipModel);
 
-            InstantiateSpaceshipModel(spaceshipData.SpaceshipPref);
+            SetupInput(inputHandler);
+            SetupThruster(spaceshipData);
+            SetupGuns(spaceshipData);
 
-            mainGunState = GunStatesFactory.CreateGunState(spaceshipData.BaseGunData, mainGunTr);
-            secondaryGunState = GunStatesFactory.CreateGunState(spaceshipData.SpecialGunData, secondaryGunTr);
-
-            thrusterVelocity = spaceshipData.ThrusterVelocity;
-            thruster = model3D.GetComponentInChildren<ParticleSystem>();
-            thrusterVelMod = thruster.velocityOverLifetime;
+            ResetPosition();
 
             audioSource.clip = spaceshipData.EngineSound;
             audioSource.Play();
@@ -87,58 +52,75 @@ namespace Asteroids.Entities
             base.Setup(spaceshipData);
         }
 
-        public void ResetState()
+        private void SetupGuns(SpaceshipData spaceshipData)
+        {
+            Animator animator = model3D.GetComponent<Animator>();
+            spaceshipGunsModule = new SpaceshipGunsModule(spaceshipData.BaseGunData, mainGunTr,
+                                                            spaceshipData.SpecialGunData, specialGunTr,
+                                                            animator, rigidbody);
+
+            spaceshipGunsModule.Setup();
+        }
+
+        private void SetupThruster(SpaceshipData spaceshipData)
+        {
+            ParticleSystem thruster = model3D.GetComponentInChildren<ParticleSystem>();
+            spaceshipThrusterModule = new SpaceshipThrusterModule(spaceshipData.ThrusterData, rigidbody, thruster);
+            spaceshipThrusterModule.Setup();
+        }
+
+        private void SetupInput(InputHandler inputHandler)
+        {
+            spaceshipInputModule = new SpaceshipInputModule();
+            inputHandler.SetSpaceshipActionsCallbacks(spaceshipInputModule);
+        }
+
+        public void ResetPosition()
         {
             rigidbody.isKinematic = true;
             transform.position = Vector3.zero;
             transform.rotation = Quaternion.identity;
             rigidbody.isKinematic = false;
+        }
 
-            mainGunState.ResetState();
-            secondaryGunState.ResetState();
-
+        public void ResetState()
+        {
+            ResetPosition();
+            spaceshipGunsModule.ResetState();
             ActivateEntity(true);
         }
 
-        public void InstantiateSpaceshipModel(GameObject spaceshipPref)
+        public void InstantiateModel(GameObject spaceshipModel)
         {
-            model3D = Instantiate(spaceshipPref);
-
+            model3D = Instantiate(spaceshipModel);
             Transform modelTr = model3D.transform;
+
             modelTr.SetParent(transform);
             modelTr.localPosition = Vector3.zero;
             modelTr.localRotation = Quaternion.identity;
-
-            animator = modelTr.GetComponent<Animator>();
         }
 
         public override void Unsetup()
         {
-            mainGunState.Unsetup();
-            secondaryGunState.Unsetup();
+            spaceshipGunsModule.Unsetup();
+            spaceshipThrusterModule.Unsetup();
 
-            base.Unsetup();
+            Destroy(model3D);
+
+            ActivateEntity(false);
+            audioSource.Stop();
         }
 
         #endregion
 
-        #region Actions methods
+        #region Update modules methods
 
         protected override void FixedUpdate()
         {
             if (isAlive)
             {
                 base.FixedUpdate();
-
-                if (isMovingForward)
-                {
-                    MoveForward();
-                }
-
-                if (rotationDir != 0f)
-                {
-                    Rotate();
-                }
+                spaceshipThrusterModule.Update();
             }
         }
 
@@ -146,73 +128,8 @@ namespace Asteroids.Entities
         {
             if (isAlive)
             {
-                if (isShotingMainGun)
-                {
-                    MainShot();
-                }
-                else if (isShotingSecondaryGun)
-                {
-                    SecondaryShot();
-                }
-
-                if (wasMovingForwardLastFrame != isMovingForward)
-                {
-                    SetThrusterEmission();
-                    wasMovingForwardLastFrame = isMovingForward;
-                }
+                spaceshipGunsModule.Update();
             }
-        }
-
-        private void SetThrusterEmission()
-        {
-            thrusterVelMod.z = (isMovingForward) ? thrusterVelocity : 0f;
-        }
-
-        public void MainShot()
-        {
-            bool canShot = mainGunState.Shot(rigidbody.velocity);
-
-            if(canShot)
-                animator.SetTrigger(MAIN_SHOT_ANIM);
-        }
-        public void SecondaryShot()
-        {
-            bool canShot = secondaryGunState.Shot(rigidbody.velocity);
-
-            if (canShot)
-                animator.SetTrigger(SECONDARY_SHOT_ANIM);
-        }
-
-        public void Rotate()
-        {
-            Quaternion deltaRotation = Quaternion.Euler(transform.up * rotationDir * rotationSpeed);
-            rigidbody.MoveRotation(rigidbody.rotation * deltaRotation);
-        }
-
-        public void MoveForward()
-        {
-            rigidbody.AddRelativeForce(Vector3.forward * speed);
-            rigidbody.velocity = Vector3.ClampMagnitude(rigidbody.velocity, maxVelocity);
-        }
-
-        public void OnMainShot(InputAction.CallbackContext context)
-        {
-            isShotingMainGun = context.ReadValue<float>() == 1f;
-        }
-
-        public void OnSecondaryShot(InputAction.CallbackContext context)
-        {
-            isShotingSecondaryGun = context.ReadValue<float>() == 1f;
-        }
-
-        public void OnMoveForward(InputAction.CallbackContext context)
-        {
-            isMovingForward = context.ReadValue<float>() == 1f;
-        }
-
-        public void OnRotate(InputAction.CallbackContext context)
-        {
-            rotationDir = context.ReadValue<float>();
         }
 
         #endregion

@@ -46,6 +46,8 @@ namespace Asteroids.Entities
         public virtual void Unsetup()
         {
             ActivateEntity(false);
+            audioSource.Stop();
+            SimplePool.Despawn(this);
         }
 
         protected virtual void ActivateEntity(bool b)

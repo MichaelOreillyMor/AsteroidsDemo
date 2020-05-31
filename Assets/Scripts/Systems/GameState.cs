@@ -61,22 +61,25 @@ namespace Asteroids.Systems
 
         public void Setup()
         {
+            inputHandler = new InputHandler();
+            inputHandler.SetGameActionsCallbacks(this);
+
             canvasManager.Setup();
+
             asteroidsLevelsController.Setup(AsteroidsLevelsData);
-            spaceshipState.Setup(spaceshipData);
+
+            spaceshipState.Setup(spaceshipData, inputHandler);
+
             cameraShake.Setup();
             backgroundController.Setup();
 
             score = 0;
-
             StartListeningMensajes();
-
-            inputHandler = new InputHandler();
-            inputHandler.SetGameActionsCallbacks(this);
-            inputHandler.SetSpaceshipActionsCallbacks(spaceshipState);
         }
 
-        //method not used yet
+        /// <summary>
+        /// Method not use and probably not needed, but every class with a Setup should implement an Unsetup.
+        /// </summary>
         public void Unsetup()
         {
             canvasManager.Unsetup();
@@ -125,7 +128,7 @@ namespace Asteroids.Systems
 
             score = 0;
             spaceshipState.ResetState();
-            asteroidsLevelsController.ResetLevels();
+            asteroidsLevelsController.ResetState();
             canvasManager.ResetPanels();
         }
 

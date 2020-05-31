@@ -21,6 +21,7 @@ namespace Asteroids.Entities
             shotArc = specialGunData.ShotArc;
             SetRotationRockets();
         }
+
         private void SetRotationRockets()
         {
             rotationRockets = new Quaternion[rocketsPerShot];
@@ -39,26 +40,15 @@ namespace Asteroids.Entities
 
         #region Shot methods
 
-        public override bool Shot(Vector3 currentVel)
+        public override void Shot(Vector3 currentVel)
         {
-            time = Time.time;
+            ConsumeShot();
+            string shotID = GenerateShotID();
 
-            if (currentAmmunition > 0 && time > nextShotTime)
+            foreach (Quaternion rotationRocket in rotationRockets)
             {
-                string shotID = GenerateShotID();
-
-                nextShotTime = time + reloadTime;
-                currentAmmunition--;
-
-                foreach (Quaternion rotationRocket in rotationRockets)
-                {
-                    ShotRocket(currentVel, rotationRocket, shotID);
-                }
-
-                return true;
+                ShotRocket(currentVel, rotationRocket, shotID);
             }
-
-            return false;
         }
 
         #endregion

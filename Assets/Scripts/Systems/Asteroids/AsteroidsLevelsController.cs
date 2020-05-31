@@ -24,18 +24,18 @@ namespace Asteroids.Systems
 
             asteroidsHandler =  new AsteroidsHandler(asteroidsLevelsData.AsteroidPref, asteroidsLevelsData.PreloadAsteroidPrefs, 
                                                     asteroidsLevelsData.AsteroidsStagesData, LevelCompletedCallback);
-
-            ResetLevels();
+            asteroidsHandler.Setup();
+            ResetState();
         }
 
         public void Unsetup()
         {
-            asteroidsHandler.UnsubscribeEvents();
+            asteroidsHandler.Unsetup();
         }
 
         #region Levels load methods
 
-        public void ResetLevels()
+        public void ResetState()
         {
             currentLevel = 0;
             asteroidsHandler.ResetAsteroids();

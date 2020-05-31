@@ -39,6 +39,8 @@ namespace Asteroids.Entities
             SimplePool.Preload(gunData.RocketData.DestroyFXPlayerPref, gunData.PreloadRocketPrefs);
         }
 
+        public virtual void Setup() { }
+
         public virtual void Unsetup()
         {
             ResetRockets();
@@ -67,21 +69,23 @@ namespace Asteroids.Entities
 
         #region Shot methods
 
-        public virtual bool Shot(Vector3 currentVel)
+        public virtual void Shot(Vector3 currentVel)
+        {
+            ConsumeShot();
+            string shotID = GenerateShotID();
+            ShotRocket(currentVel, Quaternion.identity, shotID);
+        }
+
+        public virtual bool CanShot()
         {
             time = Time.time;
+            return (time > nextShotTime);
+        }
 
-            if (time > nextShotTime)
-            {
-                string shotID = GenerateShotID();
-
-                nextShotTime = time + reloadTime;
-
-                ShotRocket(currentVel, Quaternion.identity, shotID);
-                return true;
-            }
-
-            return false;
+        protected virtual void ConsumeShot()
+        {
+            time = Time.time;
+            nextShotTime = time + reloadTime;
         }
 
         /// <summary>

@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6695753955965560381}
   m_Layer: 10
-  m_Name: SecondaryGunTr
+  m_Name: SpecialGunTr
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -82,11 +82,8 @@ MonoBehaviour:
   collider: {fileID: 7073002784647961147}
   rigidbody: {fileID: 7073002784647961148}
   model3D: {fileID: 0}
-  destroyFXPlayer: {fileID: 3781552892870564977, guid: 51e2fc45404a7b74e897eabf0f557547,
-    type: 3}
-  fixPosOnLimits: 1
   mainGunTr: {fileID: 7073002784893353940}
-  secondaryGunTr: {fileID: 6695753955965560381}
+  specialGunTr: {fileID: 6695753955965560381}
 --- !u!54 &7073002784647961148
 Rigidbody:
   m_ObjectHideFlags: 0

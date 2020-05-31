@@ -14,7 +14,7 @@
                     "interactions": ""
                 },
                 {
-                    "name": "SecondaryShot",
+                    "name": "SpecialShot",
                     "type": "PassThrough",
                     "id": "cc59fadf-4cb8-45f0-a2a4-3a3715ede974",
                     "expectedControlType": "",
@@ -156,7 +156,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "SecondaryShot",
+                    "action": "SpecialShot",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

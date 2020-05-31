@@ -37,12 +37,16 @@ namespace Asteroids.Systems
 
             SimplePool.Preload(asteroidPref, preloadAsteroidPrefs);
             SimplePool.Preload(asteroidsStagesData.BigStage.DestroyFXPlayerPref, preloadAsteroidPrefs);
+        }
 
+        public void Setup()
+        {
             Messenger<AsteroidDestroyedMessage>.AddListener("OnAsteroidDestroyed", ProcessAsteroidDestroyed);
         }
 
-        public void UnsubscribeEvents()
+        public void Unsetup()
         {
+            ResetAsteroids();
             Messenger<AsteroidDestroyedMessage>.RemoveListener("OnAsteroidDestroyed", ProcessAsteroidDestroyed);
         }
 

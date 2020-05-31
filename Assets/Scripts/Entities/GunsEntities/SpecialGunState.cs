@@ -16,7 +16,10 @@ namespace Asteroids.Entities
         {
             maxAmmunition = specialGunData.MaxAmmunition;
             currentAmmunition = 0;
-
+        }
+        public override void Setup()
+        {
+            base.Setup();
             StartListeningAddAmmunitionEvent();
         }
 
@@ -35,22 +38,15 @@ namespace Asteroids.Entities
 
         #region Shot methods
 
-        public override bool Shot(Vector3 currentVel)
+        public override bool CanShot()
         {
-            time = Time.time;
+            return (currentAmmunition > 0 && base.CanShot());
+        }
 
-            if (currentAmmunition > 0 && time > nextShotTime)
-            {
-                string shotID = GenerateShotID();
-
-                nextShotTime = time + reloadTime;
-                currentAmmunition--;
-
-                ShotRocket(currentVel, Quaternion.identity, shotID);
-                return true;
-            }
-
-            return false;
+        protected override void ConsumeShot()
+        {
+            base.ConsumeShot();
+            currentAmmunition--;
         }
 
         #endregion

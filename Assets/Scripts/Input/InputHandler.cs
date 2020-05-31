@@ -1,6 +1,6 @@
 ﻿namespace Asteroids.Input
 {
-    //Will be have more functionalities in the future
+    //Will have more functionalities in the future
     public class InputHandler
     {
         private GameControls gameControls;

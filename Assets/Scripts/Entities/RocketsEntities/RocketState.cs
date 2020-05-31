@@ -38,17 +38,9 @@ namespace Asteroids.Entities
             audioSource.Play();
         }
 
-        public override void Unsetup()
-        {
-            base.Unsetup();
-
-            audioSource.Stop();
-            SimplePool.Despawn(this);
-        }
-
         #endregion
 
-        #region Physics methods
+        #region Update methods
 
         protected override void FixedUpdate()
         {
