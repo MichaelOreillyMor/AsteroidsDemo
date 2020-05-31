@@ -1,6 +1,5 @@
 ﻿using Asteroids.Datas;
 using Asteroids.Entities.ShipModules;
-using Asteroids.Input;
 using Asteroids.Utilities.Messages;
 using Asteroids.Utilities.Pools;
 
@@ -8,10 +7,6 @@ using UnityEngine;
 
 namespace Asteroids.Entities
 {
-    /// <summary>
-    /// I would like to create another screen where the player can choose 
-    /// between different spaceship models and different weapons to attach.
-    /// </summary>
     public class SpaceshipState : BaseEntityState
     {
         #region Guns vars
@@ -26,20 +21,19 @@ namespace Asteroids.Entities
 
         #region Modules vars
 
-        private SpaceshipInputModule spaceshipInputModule;
-        private SpaceshipThrusterModule spaceshipThrusterModule;
-        private SpaceshipGunsModule spaceshipGunsModule;
+        public SpaceshipInputModule InputModule { get; private set; }
+        public SpaceshipThrusterModule ThrusterModule { get; private set; }
+        public SpaceshipGunsModule GunsModule { get; private set; }
 
         #endregion
 
-
         #region Setup/Unsetup methods
 
-        public void Setup(SpaceshipData spaceshipData, InputHandler inputHandler)
+        public void Setup(SpaceshipData spaceshipData)
         {
             InstantiateModel(spaceshipData.SpaceshipModel);
 
-            SetupInput(inputHandler);
+            SetupInput();
             SetupThruster(spaceshipData);
             SetupGuns(spaceshipData);
 
@@ -55,24 +49,23 @@ namespace Asteroids.Entities
         private void SetupGuns(SpaceshipData spaceshipData)
         {
             Animator animator = model3D.GetComponent<Animator>();
-            spaceshipGunsModule = new SpaceshipGunsModule(spaceshipData.BaseGunData, mainGunTr,
-                                                            spaceshipData.SpecialGunData, specialGunTr,
-                                                            animator, rigidbody);
+            GunsModule = new SpaceshipGunsModule(spaceshipData.BaseGunData, mainGunTr,
+                                                    spaceshipData.SpecialGunData, specialGunTr,
+                                                    animator, rigidbody);
 
-            spaceshipGunsModule.Setup();
+            GunsModule.Setup();
         }
 
         private void SetupThruster(SpaceshipData spaceshipData)
         {
             ParticleSystem thruster = model3D.GetComponentInChildren<ParticleSystem>();
-            spaceshipThrusterModule = new SpaceshipThrusterModule(spaceshipData.ThrusterData, rigidbody, thruster);
-            spaceshipThrusterModule.Setup();
+            ThrusterModule = new SpaceshipThrusterModule(spaceshipData.ThrusterData, rigidbody, thruster);
+            ThrusterModule.Setup();
         }
 
-        private void SetupInput(InputHandler inputHandler)
+        private void SetupInput()
         {
-            spaceshipInputModule = new SpaceshipInputModule();
-            inputHandler.SetSpaceshipActionsCallbacks(spaceshipInputModule);
+            InputModule = new SpaceshipInputModule();
         }
 
         public void ResetPosition()
@@ -86,7 +79,7 @@ namespace Asteroids.Entities
         public void ResetState()
         {
             ResetPosition();
-            spaceshipGunsModule.ResetState();
+            GunsModule.ResetState();
             ActivateEntity(true);
         }
 
@@ -102,8 +95,8 @@ namespace Asteroids.Entities
 
         public override void Unsetup()
         {
-            spaceshipGunsModule.Unsetup();
-            spaceshipThrusterModule.Unsetup();
+            GunsModule.Unsetup();
+            ThrusterModule.Unsetup();
 
             Destroy(model3D);
 
@@ -120,7 +113,7 @@ namespace Asteroids.Entities
             if (isAlive)
             {
                 base.FixedUpdate();
-                spaceshipThrusterModule.Update();
+                ThrusterModule.Update();
             }
         }
 
@@ -128,7 +121,7 @@ namespace Asteroids.Entities
         {
             if (isAlive)
             {
-                spaceshipGunsModule.Update();
+                GunsModule.Update();
             }
         }
 

@@ -68,7 +68,8 @@ namespace Asteroids.Systems
 
             asteroidsLevelsController.Setup(AsteroidsLevelsData);
 
-            spaceshipState.Setup(spaceshipData, inputHandler);
+            spaceshipState.Setup(spaceshipData);
+            inputHandler.SetSpaceshipActionsCallbacks(spaceshipState.InputModule);
 
             cameraShake.Setup();
             backgroundController.Setup();
