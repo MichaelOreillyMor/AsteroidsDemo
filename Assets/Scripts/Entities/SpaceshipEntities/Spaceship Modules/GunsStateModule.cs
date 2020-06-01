@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Asteroids.Entities.ShipModules
 {
-    public class SpaceshipGunsModule
+    public class GunsStateModule : IBasicModule, IResetModule
     {
         private BaseGunState mainGunState;
         private BaseGunState specialGunState;
@@ -26,7 +26,7 @@ namespace Asteroids.Entities.ShipModules
 
         #region Setup/Unsetup methods
 
-        public SpaceshipGunsModule(BaseGunData mainGunData, Transform mainGunTr, 
+        public GunsStateModule(BaseGunData mainGunData, Transform mainGunTr, 
                             SpecialGunData specialGunData, Transform specialGunTr, 
                             Animator animator, Rigidbody rigidbody)
         {

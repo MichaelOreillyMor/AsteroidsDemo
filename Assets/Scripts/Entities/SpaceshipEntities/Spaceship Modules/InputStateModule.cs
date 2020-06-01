@@ -4,7 +4,7 @@ using UnityEngine.InputSystem;
 
 namespace Asteroids.Entities.ShipModules
 {
-    public class SpaceshipInputModule : GameControls.ISpaceshipActions
+    public class InputStateModule : GameControls.ISpaceshipActions
     {
         private bool IsShotingMainGun;
         private bool wasShotingMainGun;

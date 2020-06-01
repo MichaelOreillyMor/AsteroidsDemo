@@ -21,6 +21,7 @@ namespace Asteroids.Entities
 
         [SerializeField]
         protected new Rigidbody rigidbody;
+        public Rigidbody Rigidbody => rigidbody;
 
         [SerializeField]
         protected GameObject model3D;
@@ -28,6 +29,7 @@ namespace Asteroids.Entities
         protected bool isAlive;
 
         private bool fixPosOnLimits;
+
         protected ParticlesFxPlayer destroyFXPlayerPref;
 
         #region Setup/Unsetup methods

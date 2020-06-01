@@ -9,10 +9,8 @@ namespace Asteroids.Datas
         public SpaceshipState SpaceshipPref;
         public GameObject SpaceshipModel;
 
-        public BaseGunData BaseGunData;
-        public SpecialGunData SpecialGunData;
-
-        public ThrusterData ThrusterData;
+        public GunsModuleData GunsData;
+        public ThrusterModuleData ThrusterData;
 
         public AudioClip EngineSound;
     }

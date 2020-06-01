@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Asteroids.Entities.ShipModules
 {
-    public class SpaceshipThrusterModule
+    public class ThrusterStateModule : IBasicModule
     {
         private Rigidbody rigidbody;
         private Transform transform;
@@ -30,7 +30,7 @@ namespace Asteroids.Entities.ShipModules
 
         #region Setup/Unsetup methods
 
-        public SpaceshipThrusterModule(ThrusterData thrusterData,
+        public ThrusterStateModule(ThrusterModuleData thrusterData,
                                         Rigidbody rigidbody, ParticleSystem thruster) 
         {
             this.rigidbody = rigidbody;

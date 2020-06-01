@@ -2,41 +2,60 @@
 using Asteroids.Entities.ShipModules;
 using Asteroids.Utilities.Messages;
 using Asteroids.Utilities.Pools;
+using Asteroids.Input;
 
 using UnityEngine;
 
 namespace Asteroids.Entities
 {
+    /// <summary>
+    /// SpaceshipState is a special Entity, I tried to follow a design by composition.
+    /// The rockets or asteroids are performing a single behavior,
+    /// and they can be build just with a ScriptableObject. 
+    /// The spaceship is a composition of independent behaviors that we can call modules,
+    /// The modules are independent and should be injected by a factory.
+    /// The modules are Interfaces to follow the dependency inversion principle.
+    /// All this is independent of the setup/unsetup of the spaceship that should be handler by another class.
+    /// </summary>
     public class SpaceshipState : BaseEntityState
     {
         #region Guns vars
 
         [SerializeField]
         private Transform mainGunTr;
+        public Transform MainGunTr => mainGunTr;
 
         [SerializeField]
         private Transform specialGunTr;
+        public Transform SpecialGunTr => specialGunTr;
 
         #endregion
 
         #region Modules vars
 
-        public SpaceshipInputModule InputModule { get; private set; }
-        public SpaceshipThrusterModule ThrusterModule { get; private set; }
-        public SpaceshipGunsModule GunsModule { get; private set; }
+        public GameControls.ISpaceshipActions IinputModule { get; private set; }
+
+        private IBasicModule IthrusterModule;
+        private IResetModule IgunsModule;
 
         #endregion
 
         #region Setup/Unsetup methods
 
+        public void InjectDependencies(IBasicModule IthrusterModule, IResetModule IgunsModule, 
+                                         GameControls.ISpaceshipActions IinputModule, GameObject spaceshipModel)
+        {
+            this.IthrusterModule = IthrusterModule;
+            this.IgunsModule = IgunsModule;
+            this.IinputModule = IinputModule;
+
+            model3D = spaceshipModel;
+        }
+
         public void Setup(SpaceshipData spaceshipData)
         {
-            InstantiateModel(spaceshipData.SpaceshipModel);
-
-            SetupInput();
-            SetupThruster(spaceshipData);
-            SetupGuns(spaceshipData);
-
+            IthrusterModule.Setup();
+            IgunsModule.Setup();
             ResetPosition();
 
             audioSource.clip = spaceshipData.EngineSound;
@@ -44,28 +63,6 @@ namespace Asteroids.Entities
 
             SimplePool.Preload(spaceshipData.DestroyFXPlayerPref, 1);
             base.Setup(spaceshipData);
-        }
-
-        private void SetupGuns(SpaceshipData spaceshipData)
-        {
-            Animator animator = model3D.GetComponent<Animator>();
-            GunsModule = new SpaceshipGunsModule(spaceshipData.BaseGunData, mainGunTr,
-                                                    spaceshipData.SpecialGunData, specialGunTr,
-                                                    animator, rigidbody);
-
-            GunsModule.Setup();
-        }
-
-        private void SetupThruster(SpaceshipData spaceshipData)
-        {
-            ParticleSystem thruster = model3D.GetComponentInChildren<ParticleSystem>();
-            ThrusterModule = new SpaceshipThrusterModule(spaceshipData.ThrusterData, rigidbody, thruster);
-            ThrusterModule.Setup();
-        }
-
-        private void SetupInput()
-        {
-            InputModule = new SpaceshipInputModule();
         }
 
         public void ResetPosition()
@@ -79,24 +76,14 @@ namespace Asteroids.Entities
         public void ResetState()
         {
             ResetPosition();
-            GunsModule.ResetState();
+            IgunsModule.ResetState();
             ActivateEntity(true);
-        }
-
-        public void InstantiateModel(GameObject spaceshipModel)
-        {
-            model3D = Instantiate(spaceshipModel);
-            Transform modelTr = model3D.transform;
-
-            modelTr.SetParent(transform);
-            modelTr.localPosition = Vector3.zero;
-            modelTr.localRotation = Quaternion.identity;
         }
 
         public override void Unsetup()
         {
-            GunsModule.Unsetup();
-            ThrusterModule.Unsetup();
+            IgunsModule.Unsetup();
+            IthrusterModule.Unsetup();
 
             Destroy(model3D);
 
@@ -113,7 +100,7 @@ namespace Asteroids.Entities
             if (isAlive)
             {
                 base.FixedUpdate();
-                ThrusterModule.Update();
+                IthrusterModule.Update();
             }
         }
 
@@ -121,7 +108,7 @@ namespace Asteroids.Entities
         {
             if (isAlive)
             {
-                GunsModule.Update();
+                IgunsModule.Update();
             }
         }
 

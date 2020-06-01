@@ -37,16 +37,13 @@ namespace Asteroids.Systems
         private CanvasManager canvasManager;
 
         [SerializeField]
-        private SpaceshipState spaceshipState;
-
-        [SerializeField]
         private CameraShake cameraShake;
 
         [SerializeField]
         private BackgroundController backgroundController;
 
+        private SpaceshipState spaceshipState;
         private InputHandler inputHandler;
-
         private int score;
 
         void Start()
@@ -68,8 +65,10 @@ namespace Asteroids.Systems
 
             asteroidsLevelsController.Setup(AsteroidsLevelsData);
 
+            spaceshipState = SpaceshipStatesFactory.CreateSpaceshipState(spaceshipData);
+            inputHandler.SetSpaceshipActionsCallbacks(spaceshipState.IinputModule);
+
             spaceshipState.Setup(spaceshipData);
-            inputHandler.SetSpaceshipActionsCallbacks(spaceshipState.InputModule);
 
             cameraShake.Setup();
             backgroundController.Setup();

@@ -19,7 +19,6 @@ MonoBehaviour:
     type: 3}
   SpaceshipModel: {fileID: 5551175190355302685, guid: de54998bea7dc0643beff362425226ff,
     type: 3}
-  BaseGunData: {fileID: 11400000, guid: 4b45f458e5fc206468b00eced2d9d00e, type: 2}
-  SpecialGunData: {fileID: 11400000, guid: ea656375ccb48c8418fed7b4a80a5aa5, type: 2}
+  GunsData: {fileID: 11400000, guid: 00294be82bbfc6d4dbb325a61a171a2a, type: 2}
   ThrusterData: {fileID: 11400000, guid: 23fd578a8fe498c4c8c6e02eac35072a, type: 2}
   EngineSound: {fileID: 8300000, guid: aac5167bb363326419e5ecafe02e063f, type: 3}
