@@ -15,4 +15,4 @@ MonoBehaviour:
   Speed: 25
   MaxVelocity: 13
   RotationSpeed: 7
-  ThrusterVelocity: 0.6
+  ThrusterVelocity: 0.8
