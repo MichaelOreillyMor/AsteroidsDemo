@@ -28,16 +28,36 @@ namespace Asteroids.Entities.ShipModules
 
         #endregion
 
+        #region Animator vars
+
+        private const string DIRECTION = "Direction";
+
+        private const float ANIM_THRESHOLD = 0.1f;
+
+        private const float ANIM_LEFT = -1f;
+        private const float ANIM_RIGHT = 1f;
+        private const float ANIM_FORWARD = 0f;
+
+        private Animator animator;
+        private float animSpeed;
+        private float animDir;
+
+        #endregion 
+
         #region Setup/Unsetup methods
 
-        public ThrusterStateModule(ThrusterModuleData thrusterData,
-                                        Rigidbody rigidbody, ParticleSystem thruster) 
+        public ThrusterStateModule(ThrusterModuleData thrusterData, Rigidbody rigidbody, 
+                                    ParticleSystem thruster, Animator animator) 
         {
             this.rigidbody = rigidbody;
             this.transform = rigidbody.transform;
 
             thrusterVelMod = thruster.velocityOverLifetime;
             thrusterVelocity = thrusterData.ThrusterVelocity;
+
+            this.animator = animator;
+            animSpeed = thrusterData.AnimSpeed;
+            animDir = 0;
 
             speed = thrusterData.Speed;
             maxVelocity = thrusterData.MaxVelocity;
@@ -68,6 +88,28 @@ namespace Asteroids.Entities.ShipModules
             if (rotationDir != 0f)
             {
                 Rotate();
+            }
+
+            UpdateDirAnim();
+        }
+
+        private void UpdateDirAnim()
+        {
+            if ((rotationDir > ANIM_FORWARD && animDir < ANIM_RIGHT) || (rotationDir == 0 && animDir < -ANIM_THRESHOLD))
+            {
+                animDir += animSpeed * Time.deltaTime;
+                if (animDir > ANIM_RIGHT)
+                    animDir = ANIM_RIGHT;
+
+                animator.SetFloat("Direction", animDir);
+            }
+            else if ((rotationDir < ANIM_FORWARD && animDir > ANIM_LEFT) || (rotationDir == 0 && animDir > ANIM_THRESHOLD))
+            {
+                animDir -= animSpeed * Time.deltaTime;
+                if (animDir < ANIM_LEFT)
+                    animDir = ANIM_LEFT;
+
+                animator.SetFloat("Direction", animDir);
             }
         }
 

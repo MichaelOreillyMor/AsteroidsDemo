@@ -40,8 +40,9 @@ namespace Asteroids.Entities
         private static IBasicModule CreateThrusterModule(SpaceshipState spaceshipState, GameObject spaceshipModel, ThrusterModuleData thrusterData)
         {
             ParticleSystem thruster = spaceshipModel.GetComponentInChildren<ParticleSystem>();
+            Animator animator = spaceshipModel.GetComponent<Animator>();
 
-            ThrusterStateModule thrusterModule = new ThrusterStateModule(thrusterData, spaceshipState.Rigidbody, thruster);
+            ThrusterStateModule thrusterModule = new ThrusterStateModule(thrusterData, spaceshipState.Rigidbody, thruster, animator);
             return thrusterModule;
         }
 

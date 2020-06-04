@@ -10,5 +10,6 @@ namespace Asteroids.Datas
         public float RotationSpeed;
 
         public float ThrusterVelocity;
+        public float AnimSpeed;
     }
 }

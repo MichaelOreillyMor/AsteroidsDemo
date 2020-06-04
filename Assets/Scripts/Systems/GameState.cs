@@ -12,7 +12,7 @@ using UnityEngine.InputSystem;
 namespace Asteroids.Systems
 {
     /// <summary>
-    /// Entry point to the game, manage game initialization and main logic
+    /// Entry point of the game, manage game initialization and main logic
     /// </summary>
     public class GameState : MonoBehaviour, GameControls.IGameActions
     {

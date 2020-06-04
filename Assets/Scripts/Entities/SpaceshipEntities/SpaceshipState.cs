@@ -15,7 +15,7 @@ namespace Asteroids.Entities
     /// The spaceship is a composition of independent behaviors that we can call modules,
     /// The modules are independent and should be injected by a factory.
     /// The modules are Interfaces to follow the dependency inversion principle.
-    /// All this is independent of the setup/unsetup of the spaceship that should be handler by another class.
+    /// The modulues injection is independent of the setup/unsetup of the spaceship that should be handler by another class.
     /// </summary>
     public class SpaceshipState : BaseEntityState
     {
@@ -54,15 +54,22 @@ namespace Asteroids.Entities
 
         public void Setup(SpaceshipData spaceshipData)
         {
-            IthrusterModule.Setup();
-            IgunsModule.Setup();
-            ResetPosition();
+            if (IthrusterModule != null && IgunsModule != null)
+            {
+                IthrusterModule.Setup();
+                IgunsModule.Setup();
+                ResetPosition();
 
-            audioSource.clip = spaceshipData.EngineSound;
-            audioSource.Play();
+                audioSource.clip = spaceshipData.EngineSound;
+                audioSource.Play();
 
-            SimplePool.Preload(spaceshipData.DestroyFXPlayerPref, 1);
-            base.Setup(spaceshipData);
+                SimplePool.Preload(spaceshipData.DestroyFXPlayerPref, 1);
+                base.Setup(spaceshipData);
+            }
+            else 
+            {
+                Debug.LogError("Modules dependencies should be injected first");
+            }
         }
 
         public void ResetPosition()
