@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: AnimData
   m_EditorClassIdentifier: 
   AnimMoveSpeed: 4
-  AnimThreshold: 0.1
-  AnimLeft: -1
-  AnimRight: 1
-  AnimIdle: 0
-  AnimForward: 1
+  RotThreshold: 0.1
+  RotLeft: -1
+  RotRight: 1
+  Idle: 0
+  Forward: 1

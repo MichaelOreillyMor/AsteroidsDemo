@@ -7,14 +7,14 @@ namespace Asteroids.Datas
     {
         public float AnimMoveSpeed;
 
-        public float AnimThreshold;
+        public float RotThreshold;
 
-        public float AnimLeft;
-        public float AnimRight;
+        public float RotLeft;
+        public float RotRight;
 
-        public float AnimIdle;
+        public float Idle;
 
-        public float AnimForward;
+        public float Forward;
     }
 }
 

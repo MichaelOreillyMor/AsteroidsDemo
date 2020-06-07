@@ -32,7 +32,7 @@ namespace Asteroids.Entities
         private static IResetModule CreateAnimatorModule(GameObject spaceshipModel, AnimModuleData animData)
         {
             Animator animator = spaceshipModel.GetComponent<Animator>();
-            AnimModule animModule = new AnimModule(animData, animator);
+            AnimStateModule animModule = new AnimStateModule(animData, animator);
 
             return animModule;
         }
