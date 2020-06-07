@@ -39,17 +39,16 @@ namespace Asteroids.UI
 
         private void StartListeningEvents()
         {
-            Messenger<int>.AddListener("OnStartLevel", ShowLevelPanel);
-            Messenger<int>.AddListener("OnScoreChange", UpdateScorePanel);
-            Messenger<int>.AddListener("OnScoreChange", UpdateScorePanel);
-            Messenger<bool>.AddListener("OnEndGame", ShowEndGamePanel);
+            Messenger<int>.AddListener(Messages.ON_START_LEVEL, ShowLevelPanel);
+            Messenger<int>.AddListener(Messages.ON_SCORE_CHANGE, UpdateScorePanel);
+            Messenger<bool>.AddListener(Messages.ON_ENDGAME, ShowEndGamePanel);
         }
 
         private void StopListeningEvents()
         {
-            Messenger<int>.RemoveListener("OnStartLevel", ShowLevelPanel);
-            Messenger<int>.RemoveListener("OnScoreChange", UpdateScorePanel);
-            Messenger<bool>.RemoveListener("OnEndGame", ShowEndGamePanel);
+            Messenger<int>.RemoveListener(Messages.ON_START_LEVEL, ShowLevelPanel);
+            Messenger<int>.RemoveListener(Messages.ON_SCORE_CHANGE, UpdateScorePanel);
+            Messenger<bool>.RemoveListener(Messages.ON_ENDGAME, ShowEndGamePanel);
         }
 
         #endregion

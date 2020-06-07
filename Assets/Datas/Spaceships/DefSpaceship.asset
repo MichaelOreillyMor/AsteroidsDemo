@@ -21,4 +21,5 @@ MonoBehaviour:
     type: 3}
   GunsData: {fileID: 11400000, guid: 00294be82bbfc6d4dbb325a61a171a2a, type: 2}
   ThrusterData: {fileID: 11400000, guid: 23fd578a8fe498c4c8c6e02eac35072a, type: 2}
+  AnimData: {fileID: 11400000, guid: aed98f4ebde8418438cd6efffa652b6c, type: 2}
   EngineSound: {fileID: 8300000, guid: aac5167bb363326419e5ecafe02e063f, type: 3}

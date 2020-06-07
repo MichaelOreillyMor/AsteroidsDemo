@@ -7,33 +7,24 @@ namespace Asteroids.Entities.ShipModules
 {
     public class GunsStateModule : IBasicModule, IResetModule
     {
-        private BaseGunState mainGunState;
-        private BaseGunState specialGunState;
+        private readonly BaseGunState mainGunState;
+        private readonly BaseGunState specialGunState;
 
         private bool isShotingMainGun;
         private bool isShotingSpecialGun;
 
-        private Rigidbody rigidbody;
-
-        #region Animator vars
-
-        private const string MAIN_SHOT_ANIM = "OnMainShot";
-        private const string SECONDARY_SHOT_ANIM = "OnSecondaryShot";
-
-        private Animator animator;
-
-        #endregion
+        private readonly Rigidbody rigidbody;
 
         #region Setup/Unsetup methods
 
         public GunsStateModule(BaseGunData mainGunData, Transform mainGunTr, 
-                            SpecialGunData specialGunData, Transform specialGunTr, 
-                            Animator animator, Rigidbody rigidbody)
+                                SpecialGunData specialGunData, Transform specialGunTr, 
+                                Rigidbody rigidbody)
         {
             mainGunState = GunStatesFactory.CreateGunState(mainGunData, mainGunTr);
             specialGunState = GunStatesFactory.CreateGunState(specialGunData, specialGunTr);
 
-            this.animator = animator;
+
             this.rigidbody = rigidbody;
         }
         public void Setup()
@@ -41,8 +32,8 @@ namespace Asteroids.Entities.ShipModules
             mainGunState.Setup();
             specialGunState.Setup();
 
-            Messenger<bool>.AddListener("OnShotingMainGunChange", OnShotingMainGunChange);
-            Messenger<bool>.AddListener("OnShotingSpecialGunChange", OnShotingSpecialGunChange);
+            Messenger<bool>.AddListener(Messages.ON_SHOTING_MAIN_GUN_CHANGE, OnShotingMainGunChange);
+            Messenger<bool>.AddListener(Messages.ON_SHOTING_SPECIAL_GUN_CHANGE, OnShotingSpecialGunChange);
         }
 
         public void Unsetup()
@@ -50,8 +41,8 @@ namespace Asteroids.Entities.ShipModules
             mainGunState.Unsetup();
             specialGunState.Unsetup();
 
-            Messenger<bool>.RemoveListener("OnShotingMainGunChange", OnShotingMainGunChange);
-            Messenger<bool>.RemoveListener("OnShotingSpecialGunChange", OnShotingSpecialGunChange);
+            Messenger<bool>.RemoveListener(Messages.ON_SHOTING_MAIN_GUN_CHANGE, OnShotingMainGunChange);
+            Messenger<bool>.RemoveListener(Messages.ON_SHOTING_SPECIAL_GUN_CHANGE, OnShotingSpecialGunChange);
         }
 
         public void ResetState()
@@ -81,7 +72,7 @@ namespace Asteroids.Entities.ShipModules
             if (mainGunState.CanShot())
             {
                 mainGunState.Shot(rigidbody.velocity);
-                animator.SetTrigger(MAIN_SHOT_ANIM);
+                Messenger.Broadcast(Messages.ON_MAIN_GUN_FIRE);
             }
         }
 
@@ -90,7 +81,7 @@ namespace Asteroids.Entities.ShipModules
             if (specialGunState.CanShot())
             {
                 specialGunState.Shot(rigidbody.velocity);
-                animator.SetTrigger(SECONDARY_SHOT_ANIM);
+                Messenger.Broadcast(Messages.ON_SPECIAL_GUN_FIRE);
             }
         }
 

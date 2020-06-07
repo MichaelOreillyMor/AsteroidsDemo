@@ -90,14 +90,14 @@ namespace Asteroids.Systems
         }
         private void StartListeningMensajes()
         {
-            Messenger<AsteroidDestroyedMessage>.AddListener("OnAsteroidDestroyed", OnAsteroidDestroyed);
-            Messenger<bool>.AddListener("OnEndGame", OnGameEnded);
+            Messenger<AsteroidDestroyedMessage>.AddListener(Messages.ON_ASTEROID_DESTROYED, OnAsteroidDestroyed);
+            Messenger<bool>.AddListener(Messages.ON_ENDGAME, OnGameEnded);
         }
 
         private void StopListeningMensajes()
         {
-            Messenger<AsteroidDestroyedMessage>.RemoveListener("OnAsteroidDestroyed", OnAsteroidDestroyed);
-            Messenger<bool>.RemoveListener("OnEndGame", OnGameEnded);
+            Messenger<AsteroidDestroyedMessage>.RemoveListener(Messages.ON_ASTEROID_DESTROYED, OnAsteroidDestroyed);
+            Messenger<bool>.RemoveListener(Messages.ON_ENDGAME, OnGameEnded);
         }
 
 #endregion
@@ -109,7 +109,7 @@ namespace Asteroids.Systems
             cameraShake.Shake(1f, 1f, 40f);
             score += SCORE_PER_ASTEROID;
 
-            Messenger<int>.Broadcast("OnScoreChange", score);
+            Messenger<int>.Broadcast(Messages.ON_SCORE_CHANGE, score);
         }
 
         private void OnGameEnded(bool playerWins)

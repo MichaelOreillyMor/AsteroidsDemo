@@ -1,6 +1,6 @@
 -----High priority tasks-----
 
--Create a module just to control the spaceship animator
+-Add move forward (layer 1) and turn arround (layer 0) animations
 
 -Create an AI that loads asteroids patterns instead of levels, these patterns will have a level of difficulty assigned.
 -The new patterns to spawn will be selected getting all the patterns closed to the current game dificulty (patterns selection range)

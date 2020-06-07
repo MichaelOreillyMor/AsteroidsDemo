@@ -37,16 +37,18 @@ namespace Asteroids.Entities
 
         private IBasicModule IthrusterModule;
         private IResetModule IgunsModule;
+        private IResetModule IanimModule;
 
         #endregion
 
         #region Setup/Unsetup methods
 
-        public void InjectDependencies(IBasicModule IthrusterModule, IResetModule IgunsModule, 
+        public void InjectDependencies(IBasicModule IthrusterModule, IResetModule IgunsModule, IResetModule IanimModule,
                                          GameControls.ISpaceshipActions IinputModule, GameObject spaceshipModel)
         {
             this.IthrusterModule = IthrusterModule;
             this.IgunsModule = IgunsModule;
+            this.IanimModule = IanimModule;
             this.IinputModule = IinputModule;
 
             model3D = spaceshipModel;
@@ -54,10 +56,11 @@ namespace Asteroids.Entities
 
         public void Setup(SpaceshipData spaceshipData)
         {
-            if (IthrusterModule != null && IgunsModule != null)
+            if (IthrusterModule != null && IgunsModule != null && IanimModule != null)
             {
                 IthrusterModule.Setup();
                 IgunsModule.Setup();
+                IanimModule.Setup();
                 ResetPosition();
 
                 audioSource.clip = spaceshipData.EngineSound;
@@ -82,8 +85,10 @@ namespace Asteroids.Entities
 
         public void ResetState()
         {
-            ResetPosition();
             IgunsModule.ResetState();
+            IanimModule.ResetState();
+
+            ResetPosition();
             ActivateEntity(true);
         }
 
@@ -91,6 +96,7 @@ namespace Asteroids.Entities
         {
             IgunsModule.Unsetup();
             IthrusterModule.Unsetup();
+            IgunsModule.Unsetup();
 
             Destroy(model3D);
 
@@ -116,6 +122,7 @@ namespace Asteroids.Entities
             if (isAlive)
             {
                 IgunsModule.Update();
+                IanimModule.Update();
             }
         }
 
@@ -137,7 +144,7 @@ namespace Asteroids.Entities
             PlayDestroyFXs();
             ActivateEntity(false);
 
-            Messenger<bool>.Broadcast("OnEndGame", false);
+            Messenger<bool>.Broadcast(Messages.ON_ENDGAME, false);
         }
 
         #endregion

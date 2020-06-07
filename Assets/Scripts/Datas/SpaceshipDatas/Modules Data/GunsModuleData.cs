@@ -2,7 +2,7 @@
 
 namespace Asteroids.Datas
 {
-    [CreateAssetMenu(fileName = "New GunsData", menuName = "Data/GunsData")]
+    [CreateAssetMenu(fileName = "New GunsData", menuName = "Data/Modules/GunsData")]
     public class GunsModuleData : ScriptableObject
     {
         public BaseGunData MainGunData;

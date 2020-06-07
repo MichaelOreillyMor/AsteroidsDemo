@@ -52,13 +52,13 @@ namespace Asteroids.Systems
             }
             else
             {
-                Messenger<bool>.Broadcast("OnEndGame", true);
+                Messenger<bool>.Broadcast(Messages.ON_ENDGAME, true);
             }
         }
 
         private IEnumerator DelayLevelLoad()
         {
-            Messenger<int>.Broadcast("OnStartLevel", currentLevel);
+            Messenger<int>.Broadcast(Messages.ON_START_LEVEL, currentLevel);
             yield return new WaitForSeconds(delayToStartLevels);
             asteroidsHandler.LoadLevel(asteroidsLevelsData.Levels[currentLevel]);
         }

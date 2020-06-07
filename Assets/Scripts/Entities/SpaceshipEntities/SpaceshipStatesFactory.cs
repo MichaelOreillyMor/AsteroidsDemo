@@ -21,18 +21,27 @@ namespace Asteroids.Entities
 
             GameControls.ISpaceshipActions inputModule = CreateInputModule();
             IBasicModule thrusterModule = CreateThrusterModule(spaceshipState, spaceshipModel, spaceshipData.ThrusterData);
-            IResetModule gunsModule = CreateGunsModule(spaceshipState, spaceshipModel, spaceshipData.GunsData);
+            IResetModule gunsModule = CreateGunsModule(spaceshipState, spaceshipData.GunsData);
+            IResetModule animModule = CreateAnimatorModule(spaceshipModel, spaceshipData.AnimData);
 
-            spaceshipState.InjectDependencies(thrusterModule, gunsModule, inputModule, spaceshipModel);
+            spaceshipState.InjectDependencies(thrusterModule, gunsModule, animModule, inputModule, spaceshipModel);
 
             return spaceshipState;
         }
-        private static IResetModule CreateGunsModule(SpaceshipState spaceshipState, GameObject spaceshipModel, GunsModuleData gunsData)
+
+        private static IResetModule CreateAnimatorModule(GameObject spaceshipModel, AnimModuleData animData)
         {
             Animator animator = spaceshipModel.GetComponent<Animator>();
+            AnimModule animModule = new AnimModule(animData, animator);
+
+            return animModule;
+        }
+
+        private static IResetModule CreateGunsModule(SpaceshipState spaceshipState, GunsModuleData gunsData)
+        {
             GunsStateModule gunsModule = new GunsStateModule(gunsData.MainGunData, spaceshipState.MainGunTr,
                                                                         gunsData.SpecialGunData, spaceshipState.SpecialGunTr,
-                                                                        animator, spaceshipState.Rigidbody);
+                                                                        spaceshipState.Rigidbody);
 
             return gunsModule;
         }
@@ -40,9 +49,8 @@ namespace Asteroids.Entities
         private static IBasicModule CreateThrusterModule(SpaceshipState spaceshipState, GameObject spaceshipModel, ThrusterModuleData thrusterData)
         {
             ParticleSystem thruster = spaceshipModel.GetComponentInChildren<ParticleSystem>();
-            Animator animator = spaceshipModel.GetComponent<Animator>();
 
-            ThrusterStateModule thrusterModule = new ThrusterStateModule(thrusterData, spaceshipState.Rigidbody, thruster, animator);
+            ThrusterStateModule thrusterModule = new ThrusterStateModule(thrusterData, spaceshipState.Rigidbody, thruster);
             return thrusterModule;
         }
 

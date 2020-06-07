@@ -41,13 +41,13 @@ namespace Asteroids.Systems
 
         public void Setup()
         {
-            Messenger<AsteroidDestroyedMessage>.AddListener("OnAsteroidDestroyed", ProcessAsteroidDestroyed);
+            Messenger<AsteroidDestroyedMessage>.AddListener(Messages.ON_ASTEROID_DESTROYED, ProcessAsteroidDestroyed);
         }
 
         public void Unsetup()
         {
             ResetAsteroids();
-            Messenger<AsteroidDestroyedMessage>.RemoveListener("OnAsteroidDestroyed", ProcessAsteroidDestroyed);
+            Messenger<AsteroidDestroyedMessage>.RemoveListener(Messages.ON_ASTEROID_DESTROYED, ProcessAsteroidDestroyed);
         }
 
         #region Asteroids load methods

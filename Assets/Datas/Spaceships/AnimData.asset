@@ -9,10 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8450f6ff8213ce042aae1bc073b40bf0, type: 3}
-  m_Name: ThrusterData
+  m_Script: {fileID: 11500000, guid: b14f1af6bab7fab49a29f1a334b192d2, type: 3}
+  m_Name: AnimData
   m_EditorClassIdentifier: 
-  Speed: 25
-  MaxVelocity: 13
-  RotationSpeed: 7
-  ThrusterVelocity: 0.8
+  AnimMoveSpeed: 4
+  AnimThreshold: 0.1
+  AnimLeft: -1
+  AnimRight: 1
+  AnimIdle: 0
+  AnimForward: 1

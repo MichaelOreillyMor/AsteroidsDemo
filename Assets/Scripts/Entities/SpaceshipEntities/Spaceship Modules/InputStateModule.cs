@@ -24,7 +24,7 @@ namespace Asteroids.Entities.ShipModules
             IsShotingMainGun = context.ReadValue<float>() == 1f;
 
             if (IsShotingMainGun != wasShotingMainGun)
-                Messenger<bool>.Broadcast("OnShotingMainGunChange", IsShotingMainGun);
+                Messenger<bool>.Broadcast(Messages.ON_SHOTING_MAIN_GUN_CHANGE, IsShotingMainGun);
 
             wasShotingMainGun = IsShotingMainGun;
         }
@@ -34,7 +34,7 @@ namespace Asteroids.Entities.ShipModules
             IsShotingSpecialGun = context.ReadValue<float>() == 1f;
 
             if (IsShotingSpecialGun != wasShotingSpecialGun)
-                Messenger<bool>.Broadcast("OnShotingSpecialGunChange", IsShotingSpecialGun);
+                Messenger<bool>.Broadcast(Messages.ON_SHOTING_SPECIAL_GUN_CHANGE, IsShotingSpecialGun);
 
             wasShotingSpecialGun = IsShotingSpecialGun;
         }
@@ -44,7 +44,7 @@ namespace Asteroids.Entities.ShipModules
             isMovingForward = context.ReadValue<float>() == 1f;
  
             if (isMovingForward != wasMovingForward)
-                Messenger<bool>.Broadcast("OnMoveForwardChange", isMovingForward);
+                Messenger<bool>.Broadcast(Messages.ON_MOVE_FORWARD_CHANGE, isMovingForward);
 
             wasMovingForward = isMovingForward;
         }
@@ -54,7 +54,7 @@ namespace Asteroids.Entities.ShipModules
             rotationDir = context.ReadValue<float>();
 
             if (rotationDir != prevRotationDir)
-                Messenger<float>.Broadcast("OnRotateDirChange", rotationDir);
+                Messenger<float>.Broadcast(Messages.ON_ROTATE_DIR_CHANGE, rotationDir);
 
             prevRotationDir = rotationDir;
         }

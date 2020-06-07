@@ -2,7 +2,7 @@
 
 namespace Asteroids.Datas
 {
-    [CreateAssetMenu(fileName = "New ThrusterData", menuName = "Data/ThrusterData")]
+    [CreateAssetMenu(fileName = "New ThrusterData", menuName = "Data/Modules/ThrusterData")]
     public class ThrusterModuleData : ScriptableObject
     {
         public float Speed;
@@ -10,6 +10,5 @@ namespace Asteroids.Datas
         public float RotationSpeed;
 
         public float ThrusterVelocity;
-        public float AnimSpeed;
     }
 }

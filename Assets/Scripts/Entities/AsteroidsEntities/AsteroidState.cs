@@ -103,7 +103,7 @@ namespace Asteroids.Entities
             Unsetup();
 
             AsteroidDestroyedMessage asteroidDestroyedMessage = new AsteroidDestroyedMessage(asteroidStageData, transform.position, rocketPos, shotID);
-            Messenger<AsteroidDestroyedMessage>.Broadcast("OnAsteroidDestroyed", asteroidDestroyedMessage);
+            Messenger<AsteroidDestroyedMessage>.Broadcast(Messages.ON_ASTEROID_DESTROYED, asteroidDestroyedMessage);
         }
 
         #endregion

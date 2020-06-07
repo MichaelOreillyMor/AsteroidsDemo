@@ -7,57 +7,36 @@ namespace Asteroids.Entities.ShipModules
 {
     public class ThrusterStateModule : IBasicModule
     {
-        private Rigidbody rigidbody;
-        private Transform transform;
+        private readonly Rigidbody rigidbody;
+        private readonly Transform transform;
 
         #region Movement vars
 
+        private readonly float speed;
+        private readonly float maxVelocity;
+        private readonly float rotationSpeed;
+
         private bool isMovingForward;
         private float rotationDir;
-
-        private float speed;
-        private float maxVelocity;
-        private float rotationSpeed;
 
         #endregion
 
         #region Thruster vars
 
+        private readonly float thrusterVelocity;
         private ParticleSystem.VelocityOverLifetimeModule thrusterVelMod;
-        private float thrusterVelocity;
 
         #endregion
 
-        #region Animator vars
-
-        private const string DIRECTION = "Direction";
-
-        private const float ANIM_THRESHOLD = 0.1f;
-
-        private const float ANIM_LEFT = -1f;
-        private const float ANIM_RIGHT = 1f;
-        private const float ANIM_FORWARD = 0f;
-
-        private Animator animator;
-        private float animSpeed;
-        private float animDir;
-
-        #endregion 
-
         #region Setup/Unsetup methods
 
-        public ThrusterStateModule(ThrusterModuleData thrusterData, Rigidbody rigidbody, 
-                                    ParticleSystem thruster, Animator animator) 
+        public ThrusterStateModule(ThrusterModuleData thrusterData, Rigidbody rigidbody, ParticleSystem thruster) 
         {
             this.rigidbody = rigidbody;
             this.transform = rigidbody.transform;
 
             thrusterVelMod = thruster.velocityOverLifetime;
             thrusterVelocity = thrusterData.ThrusterVelocity;
-
-            this.animator = animator;
-            animSpeed = thrusterData.AnimSpeed;
-            animDir = 0;
 
             speed = thrusterData.Speed;
             maxVelocity = thrusterData.MaxVelocity;
@@ -66,14 +45,14 @@ namespace Asteroids.Entities.ShipModules
 
         public void Setup() 
         {
-            Messenger<bool>.AddListener("OnMoveForwardChange", OnMovingForwardChange);
-            Messenger<float>.AddListener("OnRotateDirChange", OnRotationDirChange);
+            Messenger<bool>.AddListener(Messages.ON_MOVE_FORWARD_CHANGE, OnMovingForwardChange);
+            Messenger<float>.AddListener(Messages.ON_ROTATE_DIR_CHANGE, OnRotationDirChange);
         }
 
         public void Unsetup()
         {
-            Messenger<bool>.RemoveListener("OnMoveForwardChange", OnMovingForwardChange);
-            Messenger<float>.RemoveListener("OnRotateDirChange", OnRotationDirChange);
+            Messenger<bool>.RemoveListener(Messages.ON_MOVE_FORWARD_CHANGE, OnMovingForwardChange);
+            Messenger<float>.RemoveListener(Messages.ON_ROTATE_DIR_CHANGE, OnRotationDirChange);
         }
 
         #endregion
@@ -88,28 +67,6 @@ namespace Asteroids.Entities.ShipModules
             if (rotationDir != 0f)
             {
                 Rotate();
-            }
-
-            UpdateDirAnim();
-        }
-
-        private void UpdateDirAnim()
-        {
-            if ((rotationDir > ANIM_FORWARD && animDir < ANIM_RIGHT) || (rotationDir == 0 && animDir < -ANIM_THRESHOLD))
-            {
-                animDir += animSpeed * Time.deltaTime;
-                if (animDir > ANIM_RIGHT)
-                    animDir = ANIM_RIGHT;
-
-                animator.SetFloat("Direction", animDir);
-            }
-            else if ((rotationDir < ANIM_FORWARD && animDir > ANIM_LEFT) || (rotationDir == 0 && animDir > ANIM_THRESHOLD))
-            {
-                animDir -= animSpeed * Time.deltaTime;
-                if (animDir < ANIM_LEFT)
-                    animDir = ANIM_LEFT;
-
-                animator.SetFloat("Direction", animDir);
             }
         }
 

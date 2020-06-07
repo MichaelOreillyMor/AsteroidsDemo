@@ -11,6 +11,7 @@ namespace Asteroids.Datas
 
         public GunsModuleData GunsData;
         public ThrusterModuleData ThrusterData;
+        public AnimModuleData AnimData;
 
         public AudioClip EngineSound;
     }

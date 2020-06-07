@@ -55,12 +55,12 @@ namespace Asteroids.Entities
 
         protected void StartListeningAddAmmunitionEvent()
         {
-            Messenger<AsteroidDestroyedMessage>.AddListener("OnAsteroidDestroyed", AddAmunition);
+            Messenger<AsteroidDestroyedMessage>.AddListener(Messages.ON_ASTEROID_DESTROYED, AddAmunition);
         }
 
         protected void StopListeningAddAmmunitionEvent()
         {
-            Messenger<AsteroidDestroyedMessage>.RemoveListener("OnAsteroidDestroyed", AddAmunition);
+            Messenger<AsteroidDestroyedMessage>.RemoveListener(Messages.ON_ASTEROID_DESTROYED, AddAmunition);
         }
 
         protected void AddAmunition(AsteroidDestroyedMessage  asteroidDestroyedMessage)
