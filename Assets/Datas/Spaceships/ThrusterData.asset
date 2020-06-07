@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Speed: 25
   MaxVelocity: 13
-  RotationSpeed: 7
+  RotationSpeed: 8
   ThrusterVelocity: 0.8
