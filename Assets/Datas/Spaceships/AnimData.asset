@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b14f1af6bab7fab49a29f1a334b192d2, type: 3}
   m_Name: AnimData
   m_EditorClassIdentifier: 
-  AnimMoveSpeed: 4
+  AnimMoveSpeed: 3
   RotThreshold: 0.1
   RotLeft: -1
   RotRight: 1

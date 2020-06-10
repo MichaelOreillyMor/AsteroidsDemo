@@ -74,9 +74,9 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 7748c55b4bad565438238e1f94b87cfa, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 3c4dd89dbf19d8f4997fe107edafe58b, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.15
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -176,9 +176,6 @@ MonoBehaviour:
   collider: {fileID: 7882184679888107511}
   rigidbody: {fileID: 1364312764}
   model3D: {fileID: 3886008510584994223, guid: d570665259185cf499c9c457f9c45bc6, type: 3}
-  destroyFXPlayer: {fileID: 3781552892870564977, guid: d570665259185cf499c9c457f9c45bc6,
-    type: 3}
-  fixPosOnLimits: 0
 --- !u!1001 &9218840938871732864
 PrefabInstance:
   m_ObjectHideFlags: 0

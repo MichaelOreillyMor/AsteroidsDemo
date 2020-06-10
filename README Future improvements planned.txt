@@ -1,7 +1,5 @@
 -----High priority tasks-----
 
--Add turn arround (layer 0) animation
-
 -Create an AI that loads asteroids patterns instead of levels, these patterns will have a level of difficulty assigned.
 -The new patterns to spawn will be selected getting all the patterns closed to the current game dificulty (patterns selection range)
 -This AI will replace the levelsHandler and will control the AsteroidsHandler.
